@@ -1,11 +1,11 @@
 const { getPool } = require('../config/db');
 
 const User = {
-  async create({ name, email, password, role, skills, resume }) {
+  async create({ name, email, password, role, skills, study, bio, resume, avatar }) {
     const [result] = await getPool().query(
-      `INSERT INTO users (name, email, password, role, skills, resume)
-       VALUES (?, ?, ?, ?, ?, ?)`,
-      [name, email, password, role, skills, resume]
+      `INSERT INTO users (name, email, password, role, skills, study, bio, resume, avatar)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [name, email, password, role, skills, study, bio, resume, avatar]
     );
 
     return result.insertId;
@@ -18,16 +18,16 @@ const User = {
 
   async findById(id) {
     const [rows] = await getPool().query(
-      'SELECT id, name, email, role, skills, resume, created_at FROM users WHERE id = ? LIMIT 1',
+      'SELECT id, name, email, role, skills, study, bio, resume, avatar, created_at FROM users WHERE id = ? LIMIT 1',
       [id]
     );
     return rows[0] || null;
   },
 
-  async updateProfile(id, { name, skills, resume }) {
+  async updateProfile(id, { name, skills, study, bio, resume, avatar }) {
     await getPool().query(
-      'UPDATE users SET name = ?, skills = ?, resume = ? WHERE id = ?',
-      [name, skills, resume, id]
+      'UPDATE users SET name = ?, skills = ?, study = ?, bio = ?, resume = ?, avatar = ? WHERE id = ?',
+      [name, skills, study, bio, resume, avatar, id]
     );
 
     return this.findById(id);

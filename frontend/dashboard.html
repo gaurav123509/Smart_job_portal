@@ -19,95 +19,222 @@
     </div>
   </header>
 
-  <main class="page-section dashboard-layout">
-    <section class="card-shell">
-      <h2>Profile</h2>
-      <form id="profileForm" class="stack-form" enctype="multipart/form-data">
-        <div class="form-group">
-          <label for="profileName">Name</label>
-          <input id="profileName" name="name" type="text" required>
+  <main class="page-section dashboard-layout dashboard-profile-layout">
+    <section class="profile-column">
+      <article class="profile-showcase card-shell">
+        <div class="profile-cover"></div>
+        <div id="profileAvatar" class="profile-avatar">SJP</div>
+        <div class="profile-identity">
+          <p id="profileHeroHandle" class="profile-handle">@smartjobportal</p>
+          <h2 id="profileHeroName">Smart Job Profile</h2>
+          <p id="profileHeroSubline" class="profile-subline">Fresh talent profile overview</p>
         </div>
-        <div class="form-group">
-          <label for="profileEmail">Email</label>
-          <input id="profileEmail" name="email" type="email" disabled>
+        <div class="profile-cta-row">
+          <button class="button-link ghost type-button" type="button">Profile</button>
+          <a id="profileResumeAction" class="button-link ghost disabled-link" href="#" target="_blank" rel="noreferrer">Resume</a>
+          <button id="toggleAddPost" class="button-link ghost type-button" type="button">Add Post</button>
+          <button id="toggleProfileEdit" class="button-link accent type-button" type="button">Edit</button>
         </div>
-        <div class="form-group">
-          <label for="profileRole">Role</label>
-          <input id="profileRole" name="role" type="text" disabled>
-        </div>
-        <div class="form-group">
-          <label for="profileSkills">Skills</label>
-          <textarea id="profileSkills" name="skills" rows="3" placeholder="Add skills separated by commas"></textarea>
-        </div>
-        <div class="form-group">
-          <label for="profileResumeFile">Resume</label>
-          <input id="profileResumeFile" name="resume" type="file" accept=".pdf,.doc,.docx">
-        </div>
-        <div class="form-group">
-          <label for="profileResume">Current resume link</label>
-          <input id="profileResume" name="resumeLink" type="text" disabled>
-        </div>
-        <button type="submit" class="primary-btn">Save profile</button>
-        <p id="profileMessage" class="form-message"></p>
-      </form>
-    </section>
+        <p id="profileBioText" class="profile-bio">
+          Keep your profile updated so companies can review your skills, resume, and hiring readiness from one clean workspace.
+        </p>
+      </article>
 
-    <section id="studentDashboard" class="dashboard-panel hidden">
-      <div class="card-shell">
-        <h2>Applied jobs</h2>
-        <div id="studentApplications" class="data-list"></div>
-      </div>
-    </section>
+      <article class="profile-info-card card-shell">
+        <h2>Information</h2>
+        <div class="profile-info-list">
+          <div class="profile-info-row">
+            <span class="profile-info-label">Email</span>
+            <span id="profileInfoEmail" class="profile-info-value">-</span>
+          </div>
+          <div class="profile-info-row">
+            <span class="profile-info-label">Role</span>
+            <span id="profileInfoRole" class="profile-info-value">-</span>
+          </div>
+          <div class="profile-info-row">
+            <span class="profile-info-label">Study</span>
+            <span id="profileInfoStudy" class="profile-info-value">-</span>
+          </div>
+          <div class="profile-info-row">
+            <span class="profile-info-label">Resume</span>
+            <span id="profileInfoResume" class="profile-info-value">Not uploaded</span>
+          </div>
+          <div class="profile-info-row">
+            <span class="profile-info-label">Joined</span>
+            <span id="profileInfoJoined" class="profile-info-value">-</span>
+          </div>
+        </div>
+        <div id="profileSkillPreview" class="tag-row"></div>
+      </article>
 
-    <section id="companyDashboard" class="dashboard-panel hidden">
-      <div class="card-shell">
-        <h2>Create job or internship</h2>
-        <form id="jobForm" class="stack-form">
-          <div class="form-group">
-            <label for="jobTypeSelect">Type</label>
-            <select id="jobTypeSelect" name="job_type" required>
-              <option value="job">Full-time / Job</option>
-              <option value="internship">Internship</option>
-            </select>
+
+      <section id="profilePostCard" class="card-shell hidden">
+        <div class="section-headline">
+          <div>
+            <p class="section-kicker">Profile Activity</p>
+            <h2>Add Post</h2>
           </div>
+        </div>
+        <form id="profilePostForm" class="stack-form">
           <div class="form-group">
-            <label for="jobTitle">Title</label>
-            <input id="jobTitle" name="title" type="text" required>
+            <label for="postContent">Write something</label>
+            <textarea id="postContent" name="postContent" rows="4" placeholder="Share your learning progress, project update, or hiring availability"></textarea>
           </div>
-          <div class="form-group">
-            <label for="jobCompany">Company</label>
-            <input id="jobCompany" name="company" type="text" required>
-          </div>
-          <div class="form-group">
-            <label for="jobLocation">Location</label>
-            <input id="jobLocation" name="location" type="text" required>
-          </div>
-          <div class="form-group">
-            <label for="jobSkills">Skills required</label>
-            <input id="jobSkills" name="skills_required" type="text" placeholder="React, SQL, Communication" required>
-          </div>
-          <div class="form-group">
-            <label for="jobSalary">Salary / Stipend</label>
-            <input id="jobSalary" name="salary" type="text" placeholder="4.5 LPA / 15000 per month" required>
-          </div>
-          <div class="form-group">
-            <label for="jobDescription">Description</label>
-            <textarea id="jobDescription" name="description" rows="4" required></textarea>
-          </div>
-          <button type="submit" class="primary-btn">Publish role</button>
-          <p id="jobMessage" class="form-message"></p>
+          <button type="submit" class="primary-btn">Publish post</button>
+          <p id="postMessage" class="form-message"></p>
         </form>
-      </div>
+        <div id="profilePostsList" class="data-list"></div>
+      </section>
+      <section id="profileEditCard" class="card-shell hidden">
+        <div class="section-headline">
+          <div>
+            <p class="section-kicker">Profile Editor</p>
+            <h2>Edit Profile</h2>
+          </div>
+        </div>
+        <form id="profileForm" class="stack-form" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="profileName">Name</label>
+            <input id="profileName" name="name" type="text" required>
+          </div>
+          <div class="form-group">
+            <label for="profileEmail">Email</label>
+            <input id="profileEmail" name="email" type="email" disabled>
+          </div>
+          <div class="form-group">
+            <label for="profileRole">Role</label>
+            <input id="profileRole" name="role" type="text" disabled>
+          </div>
+          <div class="form-group">
+            <label for="profileSkills">Skills</label>
+            <textarea id="profileSkills" name="skills" rows="3" placeholder="Add skills separated by commas"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="profileStudy">Study</label>
+            <input id="profileStudy" name="study" type="text" placeholder="B.Tech CSE, Final Year">
+          </div>
+          <div class="form-group">
+            <label for="profileBio">Bio</label>
+            <textarea id="profileBio" name="bio" rows="4" placeholder="Short intro about your background and goals"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="profileAvatarFile">Profile image</label>
+            <input id="profileAvatarFile" name="avatar" type="file" accept=".jpg,.jpeg,.png,.webp">
+          </div>
+          <div class="form-group">
+            <label for="profileResumeFile">Resume</label>
+            <input id="profileResumeFile" name="resume" type="file" accept=".pdf,.doc,.docx">
+          </div>
+          <div class="form-group">
+            <label for="profileResume">Current resume link</label>
+            <input id="profileResume" name="resumeLink" type="text" disabled>
+          </div>
+          <button type="submit" class="primary-btn">Save profile</button>
+          <p id="profileMessage" class="form-message"></p>
+        </form>
+      </section>
+    </section>
 
-      <div class="card-shell">
-        <h2>Posted roles</h2>
-        <div id="companyJobs" class="data-list"></div>
-      </div>
+    <section class="dashboard-main-column">
+      <section class="workspace-banner card-shell">
+        <div>
+          <p class="section-kicker">Overview</p>
+          <h2 id="workspaceTitle">Student workspace</h2>
+          <p id="workspaceSubtitle">Track your profile quality and stay ready for fresher opportunities.</p>
+        </div>
+        <div class="workspace-stats">
+          <article class="stat-card">
+            <span class="stat-label">Role</span>
+            <strong id="workspaceRoleStat">Student</strong>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Skills</span>
+            <strong id="workspaceSkillsStat">0</strong>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Resume</span>
+            <strong id="workspaceResumeStat">Pending</strong>
+          </article>
+        </div>
+      </section>
 
-      <div class="card-shell">
-        <h2>Applicants</h2>
-        <div id="companyApplications" class="data-list"></div>
-      </div>
+      <section id="studentDashboard" class="dashboard-panel">
+        <div class="card-shell workspace-card">
+          <div class="section-headline">
+            <div>
+              <p class="section-kicker">Application Tracker</p>
+              <h2>My Apply's</h2>
+            </div>
+          </div>
+          <div id="studentApplications" class="data-list"></div>
+        </div>
+      </section>
+
+      <section id="companyDashboard" class="dashboard-panel hidden">
+        <div class="card-shell workspace-card">
+          <div class="section-headline">
+            <div>
+              <p class="section-kicker">Hiring Desk</p>
+              <h2>Create job or internship</h2>
+            </div>
+          </div>
+          <form id="jobForm" class="stack-form">
+            <div class="form-group">
+              <label for="jobTypeSelect">Type</label>
+              <select id="jobTypeSelect" name="job_type" required>
+                <option value="job">Full-time / Job</option>
+                <option value="internship">Internship</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="jobTitle">Title</label>
+              <input id="jobTitle" name="title" type="text" required>
+            </div>
+            <div class="form-group">
+              <label for="jobCompany">Company</label>
+              <input id="jobCompany" name="company" type="text" required>
+            </div>
+            <div class="form-group">
+              <label for="jobLocation">Location</label>
+              <input id="jobLocation" name="location" type="text" required>
+            </div>
+            <div class="form-group">
+              <label for="jobSkills">Skills required</label>
+              <input id="jobSkills" name="skills_required" type="text" placeholder="React, SQL, Communication" required>
+            </div>
+            <div class="form-group">
+              <label for="jobSalary">Salary / Stipend</label>
+              <input id="jobSalary" name="salary" type="text" placeholder="4.5 LPA / 15000 per month" required>
+            </div>
+            <div class="form-group">
+              <label for="jobDescription">Description</label>
+              <textarea id="jobDescription" name="description" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="primary-btn">Publish role</button>
+            <p id="jobMessage" class="form-message"></p>
+          </form>
+        </div>
+
+        <div class="card-shell workspace-card">
+          <div class="section-headline">
+            <div>
+              <p class="section-kicker">Open Positions</p>
+              <h2>Posted roles</h2>
+            </div>
+          </div>
+          <div id="companyJobs" class="data-list"></div>
+        </div>
+
+        <div class="card-shell workspace-card">
+          <div class="section-headline">
+            <div>
+              <p class="section-kicker">Pipeline</p>
+              <h2>Applicants</h2>
+            </div>
+          </div>
+          <div id="companyApplications" class="data-list"></div>
+        </div>
+      </section>
     </section>
   </main>
 

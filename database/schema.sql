@@ -8,7 +8,10 @@ CREATE TABLE IF NOT EXISTS users (
   password VARCHAR(255) NOT NULL,
   role ENUM('student', 'company') NOT NULL,
   skills TEXT,
+  study VARCHAR(255),
+  bio TEXT,
   resume VARCHAR(255),
+  avatar VARCHAR(255),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -31,6 +34,11 @@ CREATE TABLE IF NOT EXISTS applications (
   id INT PRIMARY KEY AUTO_INCREMENT,
   user_id INT NOT NULL,
   job_id INT NOT NULL,
+  applicant_name VARCHAR(120) NOT NULL,
+  education VARCHAR(255) NOT NULL,
+  skills_snapshot TEXT NOT NULL,
+  experience VARCHAR(120) DEFAULT 'Fresher',
+  cover_note TEXT,
   status ENUM('pending', 'shortlisted', 'rejected') DEFAULT 'pending',
   applied_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT fk_applications_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,

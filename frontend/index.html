@@ -19,9 +19,9 @@
     </nav>
 
     <section class="hero-grid">
-      <div>
+      <div class="hero-copy-column">
         <p class="eyebrow">Career Network For Freshers</p>
-        <h1>Build your first role with a job portal that feels career-first.</h1>
+        <h1 id="heroTitle" data-text="Build your first role with a job portal that feels career-first.">Build your first role with a job portal that feels career-first.</h1>
         <p class="hero-copy">
           Smart Job Portal helps students discover entry-level openings, internships, and category-based roles while companies hire fresh talent through a clean recruiting workflow.
         </p>
@@ -29,29 +29,82 @@
           <a href="register.html" class="button-link accent">Create profile</a>
           <a href="jobs.html" class="button-link ghost">Browse opportunities</a>
         </div>
+        <div class="hero-metrics">
+          <article class="hero-metric">
+            <strong>109+</strong>
+            <span>Live roles seeded across categories</span>
+          </article>
+          <article class="hero-metric">
+            <strong>Student</strong>
+            <span>Profile, resume, study, bio and applications in one flow</span>
+          </article>
+          <article class="hero-metric">
+            <strong>Company</strong>
+            <span>Post openings and review fresh applicants from one dashboard</span>
+          </article>
+        </div>
       </div>
-      <aside class="hero-card float-card">
-        <h2>What you can do here</h2>
-        <ul class="feature-list">
-          <li>Create a fresher-ready profile with resume and skills</li>
-          <li>Apply to internships and entry-level jobs</li>
-          <li>Track application status from one dashboard</li>
-          <li>Post jobs and review applicants as a company</li>
-        </ul>
+      <aside class="hero-card float-card home-workspace-card">
+        <div class="workspace-card-head">
+          <p class="section-kicker">Workspace Map</p>
+          <h2>What you can do here</h2>
+          <p class="workspace-card-copy">Use one home panel to move from profile setup to job applications and hiring workflow.</p>
+        </div>
+        <div class="workspace-summary">
+          <div class="workspace-summary-item">
+            <span class="workspace-summary-label">For students</span>
+            <strong>Register, build profile, apply, track status</strong>
+          </div>
+          <div class="workspace-summary-item">
+            <span class="workspace-summary-label">For companies</span>
+            <strong>Login, publish jobs, review applicants</strong>
+          </div>
+        </div>
+        <button id="toggleFeaturePanel" class="feature-panel-toggle type-button" type="button">Open quick actions</button>
+        <div id="featureActionsPanel" class="feature-actions hidden">
+          <div class="feature-group">
+            <button class="feature-button type-button" type="button" data-toggle-feature="profileOptions">Create Profile</button>
+            <div id="profileOptions" class="feature-options hidden">
+              <a href="register.html" class="feature-option">Register account</a>
+              <a href="dashboard.html" class="feature-option protected-action" data-requires-login="true">Edit profile</a>
+            </div>
+          </div>
+          <div class="feature-group">
+            <button class="feature-button type-button" type="button" data-toggle-feature="applyOptions">Apply for Jobs</button>
+            <div id="applyOptions" class="feature-options hidden">
+              <a href="jobs.html" class="feature-option protected-action" data-requires-login="true">Browse roles</a>
+              <a href="dashboard.html" class="feature-option protected-action" data-requires-login="true">Track my apply's</a>
+            </div>
+          </div>
+          <div class="feature-group">
+            <button class="feature-button type-button" type="button" data-toggle-feature="dashboardOptions">Open Dashboard</button>
+            <div id="dashboardOptions" class="feature-options hidden">
+              <a href="dashboard.html" class="feature-option protected-action" data-requires-login="true">Student dashboard</a>
+              <a href="dashboard.html" class="feature-option protected-action" data-requires-login="true">Profile activity</a>
+            </div>
+          </div>
+          <div class="feature-group">
+            <button class="feature-button type-button" type="button" data-toggle-feature="companyOptions">Company Login</button>
+            <div id="companyOptions" class="feature-options hidden">
+              <a href="login.html" class="feature-option">Sign in</a>
+              <a href="dashboard.html" class="feature-option protected-action" data-requires-login="true">Hiring workspace</a>
+            </div>
+          </div>
+        </div>
       </aside>
     </section>
   </header>
 
   <main class="page-section info-grid">
-    <article class="info-card">
+    <article class="info-card reveal-card">
       <h3>Student-first onboarding</h3>
       <p>Register fast, upload your resume, add your stack, and start applying without switching tools.</p>
     </article>
-    <article class="info-card">
+    <article class="info-card reveal-card">
       <h3>Structured job feed</h3>
       <p>Explore fresher jobs, internships, and developer roles in a professional feed-style layout.</p>
     </article>
-    <article class="info-card">
+    <article class="info-card reveal-card">
       <h3>Company hiring dashboard</h3>
       <p>Post openings, separate jobs from internships, and review applicants in one place.</p>
     </article>

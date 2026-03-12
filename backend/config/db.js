@@ -40,7 +40,10 @@ const initializeDatabase = async () => {
       password VARCHAR(255) NOT NULL,
       role ENUM('student', 'company') NOT NULL,
       skills TEXT,
+      study VARCHAR(255),
+      bio TEXT,
       resume VARCHAR(255),
+      avatar VARCHAR(255),
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
   `);
@@ -78,6 +81,56 @@ const initializeDatabase = async () => {
     `);
   }
 
+
+  const [studyColumns] = await connection.query(
+    `SELECT COLUMN_NAME
+     FROM INFORMATION_SCHEMA.COLUMNS
+     WHERE TABLE_SCHEMA = ?
+       AND TABLE_NAME = 'users'
+       AND COLUMN_NAME = 'study'`,
+    [DB_CONFIG.database]
+  );
+
+  if (!studyColumns.length) {
+    await connection.query(`
+      ALTER TABLE users
+      ADD COLUMN study VARCHAR(255) AFTER skills
+    `);
+  }
+
+
+  const [bioColumns] = await connection.query(
+    `SELECT COLUMN_NAME
+     FROM INFORMATION_SCHEMA.COLUMNS
+     WHERE TABLE_SCHEMA = ?
+       AND TABLE_NAME = 'users'
+       AND COLUMN_NAME = 'bio'`,
+    [DB_CONFIG.database]
+  );
+
+  if (!bioColumns.length) {
+    await connection.query(`
+      ALTER TABLE users
+      ADD COLUMN bio TEXT AFTER study
+    `);
+  }
+
+  const [avatarColumns] = await connection.query(
+    `SELECT COLUMN_NAME
+     FROM INFORMATION_SCHEMA.COLUMNS
+     WHERE TABLE_SCHEMA = ?
+       AND TABLE_NAME = 'users'
+       AND COLUMN_NAME = 'avatar'`,
+    [DB_CONFIG.database]
+  );
+
+  if (!avatarColumns.length) {
+    await connection.query(`
+      ALTER TABLE users
+      ADD COLUMN avatar VARCHAR(255) AFTER resume
+    `);
+  }
+
   // attempt to add type column if legacy schema lacks it
   try {
     await connection.query("ALTER TABLE jobs ADD COLUMN type ENUM('job','internship') NOT NULL DEFAULT 'job'");
@@ -85,11 +138,40 @@ const initializeDatabase = async () => {
     // ignore errors (column probably exists)
   }
 
+
+  const applicationColumns = {
+    applicant_name: "ALTER TABLE applications ADD COLUMN applicant_name VARCHAR(120) NOT NULL DEFAULT 'Applicant' AFTER job_id",
+    education: "ALTER TABLE applications ADD COLUMN education VARCHAR(255) NOT NULL DEFAULT 'Not provided' AFTER applicant_name",
+    skills_snapshot: "ALTER TABLE applications ADD COLUMN skills_snapshot TEXT NOT NULL AFTER education",
+    experience: "ALTER TABLE applications ADD COLUMN experience VARCHAR(120) DEFAULT 'Fresher' AFTER skills_snapshot",
+    cover_note: "ALTER TABLE applications ADD COLUMN cover_note TEXT AFTER experience"
+  };
+
+  for (const [columnName, query] of Object.entries(applicationColumns)) {
+    const [rows] = await connection.query(
+      `SELECT COLUMN_NAME
+       FROM INFORMATION_SCHEMA.COLUMNS
+       WHERE TABLE_SCHEMA = ?
+         AND TABLE_NAME = 'applications'
+         AND COLUMN_NAME = ?`,
+      [DB_CONFIG.database, columnName]
+    );
+
+    if (!rows.length) {
+      await connection.query(query);
+    }
+  }
+
   await connection.query(`
     CREATE TABLE IF NOT EXISTS applications (
       id INT PRIMARY KEY AUTO_INCREMENT,
       user_id INT NOT NULL,
       job_id INT NOT NULL,
+      applicant_name VARCHAR(120) NOT NULL,
+      education VARCHAR(255) NOT NULL,
+      skills_snapshot TEXT NOT NULL,
+      experience VARCHAR(120) DEFAULT 'Fresher',
+      cover_note TEXT,
       status ENUM('pending', 'shortlisted', 'rejected') DEFAULT 'pending',
       applied_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       CONSTRAINT fk_applications_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,

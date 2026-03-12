@@ -33,13 +33,96 @@
           <option value="internship">Internships</option>
         </select>
       </div>
+      <div class="filter-group">
+        <label for="categoryFilter">Category</label>
+        <select id="categoryFilter">
+          <option value="">All Categories</option>
+          <option value="Python Developer Jobs">Python Developer</option>
+          <option value="Java Developer Jobs">Java Developer</option>
+          <option value="Full Stack Developer Jobs">Full Stack</option>
+          <option value="Frontend Developer Jobs">Front-end</option>
+          <option value="UI/UX Jobs">UI/UX</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="cityFilter">City</label>
+        <select id="cityFilter">
+          <option value="">All Cities</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="modeFilter">Mode</label>
+        <select id="modeFilter">
+          <option value="">All Modes</option>
+          <option value="online">Online</option>
+          <option value="offline">Offline</option>
+          <option value="hybrid">Hybrid</option>
+        </select>
+      </div>
       <button id="refreshJobsButton" class="primary-btn secondary" type="button">Refresh feed</button>
     </section>
 
+    <div id="jobsHeaderNote"></div>
     <section id="jobsContainer" class="jobs-grid"></section>
     <p id="jobsMessage" class="page-message"></p>
   </main>
 
+  <section id="jobDetailsModal" class="modal-shell hidden" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal="true"></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="jobDetailsTitle">
+      <button id="closeJobDetails" class="modal-close" type="button" aria-label="Close details">x</button>
+      <p id="jobDetailsCategory" class="eyebrow"></p>
+      <h2 id="jobDetailsTitle">Job details</h2>
+      <div id="jobDetailsMeta" class="job-meta"></div>
+      <p id="jobDetailsDescription"></p>
+      <div>
+        <h3>Requirements</h3>
+        <div id="jobDetailsRequirements" class="tag-row"></div>
+      </div>
+      <div class="detail-list">
+        <p><strong>Type:</strong> <span id="jobDetailsType"></span></p>
+        <p><strong>Recruiter:</strong> <span id="jobDetailsRecruiter"></span></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="jobApplyModal" class="modal-shell hidden" aria-hidden="true">
+    <div class="modal-backdrop" data-close-apply-modal="true"></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="jobApplyTitle">
+      <button id="closeJobApply" class="modal-close" type="button" aria-label="Close application">x</button>
+      <p class="eyebrow">Application Form</p>
+      <h2 id="jobApplyTitle">Apply for job</h2>
+      <form id="jobApplyForm" class="stack-form">
+        <input id="applyJobId" type="hidden">
+        <div class="form-group">
+          <label for="applyName">Full name</label>
+          <input id="applyName" type="text" required>
+        </div>
+        <div class="form-group">
+          <label for="applyEducation">Education</label>
+          <input id="applyEducation" type="text" placeholder="B.Tech CSE, Final Year" required>
+        </div>
+        <div class="form-group">
+          <label for="applySkills">Skills</label>
+          <textarea id="applySkills" rows="3" placeholder="HTML, CSS, JavaScript" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="applyExperience">Experience</label>
+          <input id="applyExperience" type="text" placeholder="Fresher / Internship / 6 months project experience">
+        </div>
+        <div class="form-group">
+          <label for="applyCoverNote">Why should you be considered?</label>
+          <textarea id="applyCoverNote" rows="4" placeholder="Write a short note for the recruiter"></textarea>
+        </div>
+        <button type="submit" class="primary-btn">Submit Application</button>
+        <p id="applyMessage" class="form-message"></p>
+      </form>
+    </div>
+  </section>
+
+  <div id="toastPopup" class="toast-popup hidden" role="status" aria-live="polite"></div>
+
   <script src="script.js"></script>
+
 </body>
 </html>

@@ -18,31 +18,51 @@ const storage = multer.diskStorage({
 
 const upload = multer({
   storage,
-  limits: { fileSize: 3 * 1024 * 1024 },
+  limits: { fileSize: 5 * 1024 * 1024 },
   fileFilter: (_req, file, cb) => {
-    const allowedTypes = ['.pdf', '.doc', '.docx'];
     const extension = path.extname(file.originalname).toLowerCase();
+    const resumeTypes = ['.pdf', '.doc', '.docx'];
+    const imageTypes = ['.jpg', '.jpeg', '.png', '.webp'];
 
-    if (!allowedTypes.includes(extension)) {
-      cb(new Error('Resume must be a PDF, DOC, or DOCX file.'));
+    if (file.fieldname === 'resume') {
+      if (!resumeTypes.includes(extension)) {
+        cb(new Error('Resume must be a PDF, DOC, or DOCX file.'));
+        return;
+      }
+      cb(null, true);
       return;
     }
 
-    cb(null, true);
+    if (file.fieldname === 'avatar') {
+      if (!imageTypes.includes(extension)) {
+        cb(new Error('Profile image must be JPG, JPEG, PNG, or WEBP.'));
+        return;
+      }
+      cb(null, true);
+      return;
+    }
+
+    cb(new Error('Unsupported upload field.'));
   }
 });
 
-const buildResumePath = (req) => {
-  if (!req.file) {
-    return req.body.resume || '';
+const profileUpload = upload.fields([
+  { name: 'resume', maxCount: 1 },
+  { name: 'avatar', maxCount: 1 }
+]);
+
+const buildFilePath = (req, fieldName, fallback = '') => {
+  const file = req.files?.[fieldName]?.[0];
+  if (!file) {
+    return fallback;
   }
 
-  return `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+  return `${req.protocol}://${req.get('host')}/uploads/${file.filename}`;
 };
 
-router.post('/register', upload.single('resume'), async (req, res) => {
+router.post('/register', profileUpload, async (req, res) => {
   try {
-    const { name, email, password, role, skills } = req.body;
+    const { name, email, password, role, skills, study, bio } = req.body;
 
     if (!name || !email || !password || !role) {
       return res.status(400).json({ message: 'Name, email, password, and role are required.' });
@@ -64,7 +84,10 @@ router.post('/register', upload.single('resume'), async (req, res) => {
       password: hashedPassword,
       role,
       skills: skills || '',
-      resume: buildResumePath(req)
+      study: study || '',
+      bio: bio || '',
+      resume: buildFilePath(req, 'resume'),
+      avatar: buildFilePath(req, 'avatar')
     });
 
     const user = await User.findById(userId);
@@ -112,9 +135,9 @@ router.get('/users/:id', async (req, res) => {
   }
 });
 
-router.put('/users/:id', upload.single('resume'), async (req, res) => {
+router.put('/users/:id', profileUpload, async (req, res) => {
   try {
-    const { name, skills } = req.body;
+    const { name, skills, study, bio } = req.body;
 
     if (!name) {
       return res.status(400).json({ message: 'Name is required.' });
@@ -128,7 +151,10 @@ router.put('/users/:id', upload.single('resume'), async (req, res) => {
     const updatedUser = await User.updateProfile(req.params.id, {
       name: name.trim(),
       skills: skills || '',
-      resume: buildResumePath(req) || existingUser.resume || ''
+      study: study || '',
+      bio: bio || '',
+      resume: buildFilePath(req, 'resume', existingUser.resume || ''),
+      avatar: buildFilePath(req, 'avatar', existingUser.avatar || '')
     });
 
     return res.json({ message: 'Profile updated successfully.', user: updatedUser });
@@ -138,7 +164,12 @@ router.put('/users/:id', upload.single('resume'), async (req, res) => {
 });
 
 router.use((error, _req, res, next) => {
-  if (error instanceof multer.MulterError || error.message.includes('Resume must be')) {
+  if (
+    error instanceof multer.MulterError ||
+    error.message.includes('Resume must be') ||
+    error.message.includes('Profile image must be') ||
+    error.message.includes('Unsupported upload field')
+  ) {
     return res.status(400).json({ message: error.message });
   }
 

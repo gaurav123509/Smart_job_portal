@@ -7,10 +7,10 @@ const router = express.Router();
 
 router.post('/apply', async (req, res) => {
   try {
-    const { user_id, job_id } = req.body;
+    const { user_id, job_id, applicant_name, education, skills, experience, cover_note } = req.body;
 
-    if (!user_id || !job_id) {
-      return res.status(400).json({ message: 'User ID and job ID are required.' });
+    if (!user_id || !job_id || !applicant_name || !education || !skills) {
+      return res.status(400).json({ message: 'User ID, job ID, name, education, and skills are required.' });
     }
 
     const user = await User.findById(user_id);
@@ -28,7 +28,15 @@ router.post('/apply', async (req, res) => {
       return res.status(409).json({ message: 'You have already applied for this job.' });
     }
 
-    const applicationId = await Application.create({ userId: user_id, jobId: job_id });
+    const applicationId = await Application.create({
+      userId: user_id,
+      jobId: job_id,
+      applicantName: applicant_name,
+      education,
+      skills,
+      experience: experience || 'Fresher',
+      coverNote: cover_note || ''
+    });
     return res.status(201).json({
       message: 'Application submitted successfully.',
       applicationId

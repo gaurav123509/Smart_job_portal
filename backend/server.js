@@ -47,7 +47,12 @@ const startServer = async () => {
 
     // listen returns the server instance so we can hook into its error events
     const server = app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
+      const baseUrl = `http://localhost:${PORT}`;
+      console.log('\nSmart Job Portal started successfully');
+      console.log(`Backend/API: ${baseUrl}`);
+      console.log(`App Home: ${baseUrl}/app`);
+      console.log(`Jobs Page: ${baseUrl}/jobs.html`);
+      console.log(`Dashboard: ${baseUrl}/dashboard.html\n`);
     });
 
     server.on('error', (err) => {
