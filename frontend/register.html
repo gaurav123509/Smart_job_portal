@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register | Smart Job Portal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="register">
+  <main class="auth-layout">
+    <section class="auth-panel intro-panel">
+      <p class="eyebrow">Join The Network</p>
+      <h1>Create a profile companies can actually evaluate.</h1>
+      <p>Students can upload resumes and showcase skills. Companies can onboard quickly and start publishing roles immediately.</p>
+      <a href="login.html" class="button-link ghost">Already registered?</a>
+    </section>
+
+    <section class="auth-panel form-panel">
+      <form id="registerForm" class="form-card" enctype="multipart/form-data">
+        <h2>Create account</h2>
+        <div class="form-group">
+          <label for="registerName">Full name</label>
+          <input id="registerName" name="name" type="text" placeholder="Enter full name" required>
+        </div>
+        <div class="form-group">
+          <label for="registerEmail">Email address</label>
+          <input id="registerEmail" name="email" type="email" placeholder="Enter email" required>
+        </div>
+        <div class="form-group">
+          <label for="registerPassword">Password</label>
+          <input id="registerPassword" name="password" type="password" placeholder="Create a password" required>
+        </div>
+        <div class="form-group">
+          <label for="registerRole">Role</label>
+          <select id="registerRole" name="role" required>
+            <option value="student">Student</option>
+            <option value="company">Company</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="registerSkills">Skills</label>
+          <input id="registerSkills" name="skills" type="text" placeholder="HTML, CSS, JavaScript">
+        </div>
+        <div class="form-group">
+          <label for="registerResume">Resume file</label>
+          <input id="registerResume" name="resume" type="file" accept=".pdf,.doc,.docx">
+        </div>
+        <button type="submit" class="primary-btn">Join now</button>
+        <p id="registerMessage" class="form-message"></p>
+      </form>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

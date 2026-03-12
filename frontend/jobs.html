@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jobs | Smart Job Portal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="jobs">
+  <header class="subpage-header">
+    <div>
+      <p class="eyebrow">Opportunity Feed</p>
+      <h1>Jobs and internships for fresh talent</h1>
+    </div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="dashboard.html">Dashboard</a>
+      <button id="logoutButton" class="button-link ghost type-button" type="button">Logout</button>
+    </div>
+  </header>
+
+  <main class="page-section">
+    <section class="jobs-toolbar card-shell">
+      <div>
+        <h2>Latest openings</h2>
+        <p>Explore category-wise jobs loaded directly from the backend API.</p>
+      </div>
+      <div class="filter-group">
+        <label for="jobFilter">Filter</label>
+        <select id="jobFilter">
+          <option value="">All</option>
+          <option value="job">Jobs</option>
+          <option value="internship">Internships</option>
+        </select>
+      </div>
+      <button id="refreshJobsButton" class="primary-btn secondary" type="button">Refresh feed</button>
+    </section>
+
+    <section id="jobsContainer" class="jobs-grid"></section>
+    <p id="jobsMessage" class="page-message"></p>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
