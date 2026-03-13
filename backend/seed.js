@@ -1,103 +1,80 @@
+const fs = require('fs');
+const path = require('path');
 const bcrypt = require('bcryptjs');
-const { getPool, initializeDatabase } = require('./config/db');
+const { initializeDatabase } = require('./config/db');
 const User = require('./models/User');
 const Job = require('./models/Job');
 const Application = require('./models/Application');
 
+const JOB_SEED_PATH = path.join(__dirname, '../database/seed_jobs.json');
+
 async function seed() {
   try {
-    // ensure database and tables exist
     await initializeDatabase();
 
-    // helper to insert user if not exists
-    const insertUser = async ({ name, email, password, role, skills = '', resume = '' }) => {
+    const insertUser = async ({ name, email, password, role, skills = '', study = '', bio = '', resume = '', avatar = '' }) => {
       const existing = await User.findByEmail(email);
       if (existing) return existing.id;
+
       const hashed = await bcrypt.hash(password, 10);
-      const id = await User.create({ name, email, password: hashed, role, skills, resume });
+      const id = await User.create({ name, email, password: hashed, role, skills, study, bio, resume, avatar });
       console.log(`Created user ${name} (${role}) id=${id}`);
       return id;
     };
 
-    const studentId1 = await insertUser({
+    const studentId = await insertUser({
       name: 'Alice Student',
       email: 'alice@example.com',
       password: 'password',
       role: 'student',
       skills: 'HTML, CSS, JavaScript',
-      resume: ''
+      study: 'B.Tech CSE, Final Year'
     });
 
-    const studentId2 = await insertUser({
-      name: 'Bob Learner',
-      email: 'bob@example.com',
-      password: 'password',
-      role: 'student',
-      skills: 'Python, SQL',
-      resume: ''
-    });
-
-    const companyId = await insertUser({
-      name: 'FreshHire Co',
-      email: 'hr@freshhire.com',
+    const seedCompanyId = await insertUser({
+      name: 'Seed Company',
+      email: 'seed-company@smartjobportal.local',
       password: 'password',
       role: 'company',
-      skills: 'Hiring, Recruitment',
-      resume: ''
+      skills: 'Hiring, Recruitment'
     });
 
-    const jobData = [
-      {
-        title: 'Front‑end Intern',
-        company: 'FreshHire Co',
-        location: 'Remote',
-        type: 'internship',
-        skillsRequired: 'HTML, CSS, JavaScript',
-        salary: '10k/month',
-        description: 'Work on UI for our new portal.',
-        postedBy: companyId
-      },
-      {
-        title: 'Junior Python Developer',
-        company: 'FreshHire Co',
-        location: 'Onsite',
-        type: 'job',
-        skillsRequired: 'Python, SQL',
-        salary: '20k/month',
-        description: 'Help build data pipelines.',
-        postedBy: companyId
-      },
-      {
-        title: 'Data Analyst Intern',
-        company: 'FreshHire Co',
-        location: 'Remote',
-        type: 'internship',
-        skillsRequired: 'Excel, SQL, Python',
-        salary: '12k/month',
-        description: 'Analyze survey data.',
-        postedBy: companyId
+    const jobRows = JSON.parse(fs.readFileSync(JOB_SEED_PATH, 'utf8'));
+    const existingJobs = await Job.findAll();
+    const existingTitles = new Set(existingJobs.map((job) => job.title));
+
+    for (const job of jobRows) {
+      if (existingTitles.has(job.title)) continue;
+      const id = await Job.create({
+        ...job,
+        postedBy: seedCompanyId
+      });
+      existingTitles.add(job.title);
+      console.log(`Created job ${job.title} id=${id}`);
+    }
+
+    const refreshedJobs = await Job.findAll();
+    const firstJob = refreshedJobs[0];
+    if (firstJob) {
+      const existingApp = await Application.findExisting(studentId, firstJob.id);
+      if (!existingApp) {
+        const appId = await Application.create({
+          userId: studentId,
+          jobId: firstJob.id,
+          applicantName: 'Alice Student',
+          education: 'B.Tech CSE, Final Year',
+          skills: 'HTML, CSS, JavaScript',
+          experience: 'Fresher',
+          coverNote: 'Interested in frontend internships.'
+        });
+        console.log(`Created application id=${appId}`);
       }
-    ];
-
-    for (const j of jobData) {
-      // naive check by title
-      const existing = await getPool().query('SELECT id FROM jobs WHERE title = ? LIMIT 1', [j.title]);
-      if (existing[0].length) continue;
-      const id = await Job.create(j);
-      console.log(`Created job ${j.title} id=${id}`);
     }
 
-    // create one application if not exists
-    const existingApp = await Application.findExisting(studentId1, 1);
-    if (!existingApp) {
-      const appId = await Application.create({ userId: studentId1, jobId: 1 });
-      console.log(`Created application id=${appId}`);
-    }
-
-    console.log('Seeding completed.');
+    console.log(`MongoDB seeding completed with ${jobRows.length} job templates.`);
     process.exit(0);
-  } catch (err) {
-    console.error('Seed failed:', err);
+  } catch (error) {
+    console.error('Seed failed:', error);
     process.exit(1);
   }
 }

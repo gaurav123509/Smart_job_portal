@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const { getPool, initializeDatabase } = require('./config/db');
+const { initializeDatabase, pingDatabase } = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
 const jobRoutes = require('./routes/jobRoutes');
 const applicationRoutes = require('./routes/applicationRoutes');
@@ -21,7 +21,7 @@ app.use(express.static(frontendPath));
 
 app.get('/', async (_req, res) => {
   try {
-    await getPool().query('SELECT 1');
+    await pingDatabase();
     return res.json({ message: 'Smart Job Portal API is running.' });
   } catch (error) {
     return res.status(500).json({ message: 'Database connection failed.', error: error.message });
@@ -45,7 +45,6 @@ const startServer = async () => {
   try {
     await initializeDatabase();
 
-    // listen returns the server instance so we can hook into its error events
     const server = app.listen(PORT, () => {
       const baseUrl = `http://localhost:${PORT}`;
       console.log('\nSmart Job Portal started successfully');
@@ -57,8 +56,7 @@ const startServer = async () => {
 
     server.on('error', (err) => {
       if (err.code === 'EADDRINUSE') {
-        console.error(`Port ${PORT} is already in use. ` +
-          'Change the PORT environment variable or stop the process using that port.');
+        console.error(`Port ${PORT} is already in use. Change the PORT environment variable or stop the process using that port.`);
       } else {
         console.error('Server error:', err.message);
       }

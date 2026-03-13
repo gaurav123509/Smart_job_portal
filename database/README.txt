@@ -1,11 +1,9 @@
-Smart Job Portal MySQL setup
+Smart Job Portal MongoDB seed assets
 
-1. Open MySQL.
-2. Run the SQL inside database/schema.sql.
-3. Make sure the database name is smart_job_portal.
-4. Update backend connection settings using .env copied from .env.example.
+Files included:
+- seed_jobs.json: Mongo-friendly job seed data
 
-Tables included:
-- users
-- jobs
-- applications
+How it is used:
+1. Configure `MONGODB_URI` in `.env`.
+2. Run `node backend/seed.js`.
+3. The script seeds sample users, jobs, and one sample application into MongoDB Atlas or your local MongoDB instance.

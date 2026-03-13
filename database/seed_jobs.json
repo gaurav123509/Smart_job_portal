@@ -1,0 +1,1052 @@
+[
+  {
+    "category": "Fresher Jobs",
+    "title": "Junior Software Developer",
+    "company": "TCS",
+    "location": "Indore",
+    "type": "job",
+    "skillsRequired": "Java,SQL",
+    "salary": "4.2 LPA",
+    "description": "Entry-level software development role for fresh graduates working on Java and SQL-based applications."
+  },
+  {
+    "category": "Fresher Jobs",
+    "title": "Graduate Trainee Engineer",
+    "company": "Infosys",
+    "location": "Bangalore",
+    "type": "job",
+    "skillsRequired": "Java,Spring",
+    "salary": "4.5 LPA",
+    "description": "Graduate trainee role focused on backend services and enterprise application support."
+  },
+  {
+    "category": "Fresher Jobs",
+    "title": "Associate Developer",
+    "company": "Wipro",
+    "location": "Hyderabad",
+    "type": "job",
+    "skillsRequired": "Python,SQL",
+    "salary": "4.3 LPA",
+    "description": "Join the development team to build and maintain internal business applications."
+  },
+  {
+    "category": "Fresher Jobs",
+    "title": "Software Engineer Trainee",
+    "company": "Accenture",
+    "location": "Pune",
+    "type": "job",
+    "skillsRequired": "JavaScript,Node",
+    "salary": "4.6 LPA",
+    "description": "Support product development and work on Node.js driven web services."
+  },
+  {
+    "category": "Fresher Jobs",
+    "title": "Junior Backend Developer",
+    "company": "Tech Mahindra",
+    "location": "Noida",
+    "type": "job",
+    "skillsRequired": "Java,MySQL",
+    "salary": "4.4 LPA",
+    "description": "Assist in backend API development and MySQL query optimization."
+  },
+  {
+    "category": "Fresher Jobs",
+    "title": "IT Support Engineer",
+    "company": "HCL",
+    "location": "Delhi",
+    "type": "job",
+    "skillsRequired": "Networking",
+    "salary": "3.8 LPA",
+    "description": "Handle entry-level IT support, troubleshooting, and network issue resolution."
+  },
+  {
+    "category": "Fresher Jobs",
+    "title": "Software Tester",
+    "company": "Capgemini",
+    "location": "Mumbai",
+    "type": "job",
+    "skillsRequired": "Testing",
+    "salary": "4.0 LPA",
+    "description": "Execute manual and functional testing for enterprise applications."
+  },
+  {
+    "category": "Fresher Jobs",
+    "title": "Junior Web Developer",
+    "company": "Mindtree",
+    "location": "Bangalore",
+    "type": "job",
+    "skillsRequired": "HTML,CSS,JS",
+    "salary": "4.1 LPA",
+    "description": "Build responsive web interfaces and support frontend development tasks."
+  },
+  {
+    "category": "Fresher Jobs",
+    "title": "Data Analyst Trainee",
+    "company": "Cognizant",
+    "location": "Hyderabad",
+    "type": "job",
+    "skillsRequired": "Python,Excel",
+    "salary": "4.2 LPA",
+    "description": "Analyze business data and prepare reports using Python and Excel."
+  },
+  {
+    "category": "Fresher Jobs",
+    "title": "Junior QA Engineer",
+    "company": "IBM",
+    "location": "Pune",
+    "type": "job",
+    "skillsRequired": "Manual Testing",
+    "salary": "4.3 LPA",
+    "description": "Support quality assurance cycles with test planning and bug reporting."
+  },
+  {
+    "category": "Fresher Jobs",
+    "title": "Graduate Developer",
+    "company": "L&T Infotech",
+    "location": "Mumbai",
+    "type": "job",
+    "skillsRequired": "Java",
+    "salary": "4.4 LPA",
+    "description": "Work with senior engineers to develop and maintain Java-based systems."
+  },
+  {
+    "category": "Fresher Jobs",
+    "title": "Software Support Engineer",
+    "company": "Zoho",
+    "location": "Chennai",
+    "type": "job",
+    "skillsRequired": "SQL",
+    "salary": "4.0 LPA",
+    "description": "Provide software support and handle SQL-based troubleshooting tasks."
+  },
+  {
+    "category": "Fresher Jobs",
+    "title": "Junior Application Developer",
+    "company": "Oracle",
+    "location": "Bangalore",
+    "type": "job",
+    "skillsRequired": "Java",
+    "salary": "4.8 LPA",
+    "description": "Entry-level application development role in enterprise Java systems."
+  },
+  {
+    "category": "Fresher Jobs",
+    "title": "IT Associate",
+    "company": "Amazon",
+    "location": "Hyderabad",
+    "type": "job",
+    "skillsRequired": "Cloud",
+    "salary": "4.6 LPA",
+    "description": "Support cloud operations and internal IT workflows for business systems."
+  },
+  {
+    "category": "Fresher Jobs",
+    "title": "Technical Associate",
+    "company": "Flipkart",
+    "location": "Bangalore",
+    "type": "job",
+    "skillsRequired": "JavaScript",
+    "salary": "4.3 LPA",
+    "description": "Assist with web product development and technical issue resolution."
+  },
+  {
+    "category": "Internship Jobs",
+    "title": "Web Development Intern",
+    "company": "Google",
+    "location": "Remote",
+    "type": "internship",
+    "skillsRequired": "HTML,CSS,JS",
+    "salary": "20,000/month",
+    "description": "Internship focused on building landing pages and frontend components."
+  },
+  {
+    "category": "Internship Jobs",
+    "title": "Software Engineer Intern",
+    "company": "Microsoft",
+    "location": "Bangalore",
+    "type": "internship",
+    "skillsRequired": "Python",
+    "salary": "25,000/month",
+    "description": "Work with engineering mentors on Python-based tools and services."
+  },
+  {
+    "category": "Internship Jobs",
+    "title": "Frontend Intern",
+    "company": "Amazon",
+    "location": "Hyderabad",
+    "type": "internship",
+    "skillsRequired": "React",
+    "salary": "22,000/month",
+    "description": "Support frontend feature development using React."
+  },
+  {
+    "category": "Internship Jobs",
+    "title": "Backend Intern",
+    "company": "Flipkart",
+    "location": "Bangalore",
+    "type": "internship",
+    "skillsRequired": "Node.js",
+    "salary": "22,000/month",
+    "description": "Build backend endpoints and support API integrations with Node.js."
+  },
+  {
+    "category": "Internship Jobs",
+    "title": "Data Science Intern",
+    "company": "IBM",
+    "location": "Pune",
+    "type": "internship",
+    "skillsRequired": "Python",
+    "salary": "24,000/month",
+    "description": "Assist in data cleaning, analysis, and model experimentation."
+  },
+  {
+    "category": "Internship Jobs",
+    "title": "Machine Learning Intern",
+    "company": "Intel",
+    "location": "Bangalore",
+    "type": "internship",
+    "skillsRequired": "ML,Python",
+    "salary": "26,000/month",
+    "description": "Work on ML experiments, datasets, and Python-based prototypes."
+  },
+  {
+    "category": "Internship Jobs",
+    "title": "Android Developer Intern",
+    "company": "Samsung",
+    "location": "Delhi",
+    "type": "internship",
+    "skillsRequired": "Kotlin",
+    "salary": "20,000/month",
+    "description": "Support Android application development and testing."
+  },
+  {
+    "category": "Internship Jobs",
+    "title": "Full Stack Intern",
+    "company": "Zoho",
+    "location": "Chennai",
+    "type": "internship",
+    "skillsRequired": "MERN",
+    "salary": "22,000/month",
+    "description": "Contribute to MERN stack features across frontend and backend."
+  },
+  {
+    "category": "Internship Jobs",
+    "title": "DevOps Intern",
+    "company": "Adobe",
+    "location": "Noida",
+    "type": "internship",
+    "skillsRequired": "Docker",
+    "salary": "24,000/month",
+    "description": "Assist with CI/CD, Docker-based setups, and deployment workflows."
+  },
+  {
+    "category": "Internship Jobs",
+    "title": "UI UX Intern",
+    "company": "Paytm",
+    "location": "Noida",
+    "type": "internship",
+    "skillsRequired": "Figma",
+    "salary": "18,000/month",
+    "description": "Support UI/UX design work including wireframes and high-fidelity mockups."
+  },
+  {
+    "category": "Internship Jobs",
+    "title": "Cloud Intern",
+    "company": "Oracle",
+    "location": "Bangalore",
+    "type": "internship",
+    "skillsRequired": "AWS",
+    "salary": "24,000/month",
+    "description": "Support cloud deployment tasks and environment management."
+  },
+  {
+    "category": "Internship Jobs",
+    "title": "Testing Intern",
+    "company": "Infosys",
+    "location": "Mysore",
+    "type": "internship",
+    "skillsRequired": "Automation",
+    "salary": "18,000/month",
+    "description": "Assist QA automation teams in writing and running test scripts."
+  },
+  {
+    "category": "Internship Jobs",
+    "title": "React Developer Intern",
+    "company": "Swiggy",
+    "location": "Remote",
+    "type": "internship",
+    "skillsRequired": "React",
+    "salary": "20,000/month",
+    "description": "Build reusable React components and improve frontend experiences."
+  },
+  {
+    "category": "Internship Jobs",
+    "title": "Backend Developer Intern",
+    "company": "Razorpay",
+    "location": "Bangalore",
+    "type": "internship",
+    "skillsRequired": "Node",
+    "salary": "25,000/month",
+    "description": "Support backend systems and payment service integrations."
+  },
+  {
+    "category": "Internship Jobs",
+    "title": "Python Intern",
+    "company": "TCS",
+    "location": "Pune",
+    "type": "internship",
+    "skillsRequired": "Python",
+    "salary": "18,000/month",
+    "description": "Contribute to Python-based automation and data tasks."
+  },
+  {
+    "category": "Python Developer Jobs",
+    "title": "Python Developer",
+    "company": "TCS",
+    "location": "Pune",
+    "type": "job",
+    "skillsRequired": "Python,Django",
+    "salary": "6.0 LPA",
+    "description": "Develop and maintain Django-based web applications."
+  },
+  {
+    "category": "Python Developer Jobs",
+    "title": "Backend Python Engineer",
+    "company": "Infosys",
+    "location": "Bangalore",
+    "type": "job",
+    "skillsRequired": "Python,Flask",
+    "salary": "6.5 LPA",
+    "description": "Build backend APIs and microservices using Flask."
+  },
+  {
+    "category": "Python Developer Jobs",
+    "title": "Python API Developer",
+    "company": "Wipro",
+    "location": "Hyderabad",
+    "type": "job",
+    "skillsRequired": "Python,REST",
+    "salary": "6.2 LPA",
+    "description": "Design and maintain REST APIs for internal products."
+  },
+  {
+    "category": "Python Developer Jobs",
+    "title": "Junior Python Engineer",
+    "company": "Accenture",
+    "location": "Mumbai",
+    "type": "job",
+    "skillsRequired": "Python",
+    "salary": "5.8 LPA",
+    "description": "Support Python application development and debugging."
+  },
+  {
+    "category": "Python Developer Jobs",
+    "title": "Python Software Developer",
+    "company": "Capgemini",
+    "location": "Delhi",
+    "type": "job",
+    "skillsRequired": "Python",
+    "salary": "6.1 LPA",
+    "description": "Work on Python-driven software features and internal systems."
+  },
+  {
+    "category": "Python Developer Jobs",
+    "title": "Python Developer",
+    "company": "Cognizant",
+    "location": "Chennai",
+    "type": "job",
+    "skillsRequired": "Python",
+    "salary": "6.0 LPA",
+    "description": "Develop scalable backend modules using Python."
+  },
+  {
+    "category": "Python Developer Jobs",
+    "title": "Django Developer",
+    "company": "Zoho",
+    "location": "Chennai",
+    "type": "job",
+    "skillsRequired": "Django",
+    "salary": "6.3 LPA",
+    "description": "Build business web applications using Django."
+  },
+  {
+    "category": "Python Developer Jobs",
+    "title": "Flask Developer",
+    "company": "IBM",
+    "location": "Pune",
+    "type": "job",
+    "skillsRequired": "Flask",
+    "salary": "6.2 LPA",
+    "description": "Create lightweight APIs and services in Flask."
+  },
+  {
+    "category": "Python Developer Jobs",
+    "title": "Python Data Engineer",
+    "company": "Amazon",
+    "location": "Bangalore",
+    "type": "job",
+    "skillsRequired": "Python,ETL",
+    "salary": "7.0 LPA",
+    "description": "Work on ETL pipelines and backend data processing systems."
+  },
+  {
+    "category": "Python Developer Jobs",
+    "title": "Python Backend Developer",
+    "company": "Flipkart",
+    "location": "Bangalore",
+    "type": "job",
+    "skillsRequired": "Python",
+    "salary": "6.7 LPA",
+    "description": "Develop backend services and maintain Python APIs."
+  },
+  {
+    "category": "Python Developer Jobs",
+    "title": "Python ML Engineer",
+    "company": "Intel",
+    "location": "Bangalore",
+    "type": "job",
+    "skillsRequired": "ML",
+    "salary": "7.2 LPA",
+    "description": "Build ML-backed Python services and model pipelines."
+  },
+  {
+    "category": "Python Developer Jobs",
+    "title": "Python Automation Engineer",
+    "company": "Oracle",
+    "location": "Hyderabad",
+    "type": "job",
+    "skillsRequired": "Automation",
+    "salary": "6.4 LPA",
+    "description": "Create automation scripts for testing and infrastructure tasks."
+  },
+  {
+    "category": "Python Developer Jobs",
+    "title": "Python API Developer",
+    "company": "Paytm",
+    "location": "Noida",
+    "type": "job",
+    "skillsRequired": "REST",
+    "salary": "6.3 LPA",
+    "description": "Build and maintain RESTful backend APIs."
+  },
+  {
+    "category": "Python Developer Jobs",
+    "title": "Python Software Engineer",
+    "company": "Adobe",
+    "location": "Noida",
+    "type": "job",
+    "skillsRequired": "Python",
+    "salary": "6.8 LPA",
+    "description": "Develop production-ready Python applications."
+  },
+  {
+    "category": "Python Developer Jobs",
+    "title": "Python Developer",
+    "company": "Swiggy",
+    "location": "Remote",
+    "type": "job",
+    "skillsRequired": "Python",
+    "salary": "6.5 LPA",
+    "description": "Work on remote backend engineering tasks in Python."
+  },
+  {
+    "category": "Java Developer Jobs",
+    "title": "Java Developer",
+    "company": "TCS",
+    "location": "Mumbai",
+    "type": "job",
+    "skillsRequired": "Java,Spring",
+    "salary": "6.2 LPA",
+    "description": "Develop Java and Spring based enterprise applications."
+  },
+  {
+    "category": "Java Developer Jobs",
+    "title": "Backend Java Engineer",
+    "company": "Infosys",
+    "location": "Bangalore",
+    "type": "job",
+    "skillsRequired": "Spring Boot",
+    "salary": "6.7 LPA",
+    "description": "Build backend services using Spring Boot."
+  },
+  {
+    "category": "Java Developer Jobs",
+    "title": "Java Software Engineer",
+    "company": "Wipro",
+    "location": "Hyderabad",
+    "type": "job",
+    "skillsRequired": "Java",
+    "salary": "6.3 LPA",
+    "description": "Work on Java modules and enterprise software maintenance."
+  },
+  {
+    "category": "Java Developer Jobs",
+    "title": "Junior Java Developer",
+    "company": "Accenture",
+    "location": "Pune",
+    "type": "job",
+    "skillsRequired": "Java",
+    "salary": "6.0 LPA",
+    "description": "Support development of Java applications and services."
+  },
+  {
+    "category": "Java Developer Jobs",
+    "title": "Java API Developer",
+    "company": "Capgemini",
+    "location": "Delhi",
+    "type": "job",
+    "skillsRequired": "REST",
+    "salary": "6.1 LPA",
+    "description": "Design and maintain Java-based REST APIs."
+  },
+  {
+    "category": "Java Developer Jobs",
+    "title": "Java Developer",
+    "company": "IBM",
+    "location": "Pune",
+    "type": "job",
+    "skillsRequired": "Spring",
+    "salary": "6.5 LPA",
+    "description": "Build scalable applications using Java and Spring."
+  },
+  {
+    "category": "Java Developer Jobs",
+    "title": "Java Backend Engineer",
+    "company": "Amazon",
+    "location": "Bangalore",
+    "type": "job",
+    "skillsRequired": "Java",
+    "salary": "7.2 LPA",
+    "description": "Develop backend services for high-scale systems."
+  },
+  {
+    "category": "Java Developer Jobs",
+    "title": "Java Developer",
+    "company": "Oracle",
+    "location": "Hyderabad",
+    "type": "job",
+    "skillsRequired": "Java",
+    "salary": "7.0 LPA",
+    "description": "Build enterprise-grade Java applications."
+  },
+  {
+    "category": "Java Developer Jobs",
+    "title": "Java Microservices Developer",
+    "company": "Adobe",
+    "location": "Noida",
+    "type": "job",
+    "skillsRequired": "Microservices",
+    "salary": "7.1 LPA",
+    "description": "Work on distributed services and Java microservice architecture."
+  },
+  {
+    "category": "Java Developer Jobs",
+    "title": "Java Developer",
+    "company": "Flipkart",
+    "location": "Bangalore",
+    "type": "job",
+    "skillsRequired": "Spring",
+    "salary": "6.8 LPA",
+    "description": "Maintain scalable Java applications with Spring."
+  },
+  {
+    "category": "Java Developer Jobs",
+    "title": "Java Software Engineer",
+    "company": "Paytm",
+    "location": "Noida",
+    "type": "job",
+    "skillsRequired": "Java",
+    "salary": "6.6 LPA",
+    "description": "Contribute to Java backend features and support."
+  },
+  {
+    "category": "Java Developer Jobs",
+    "title": "Java Application Developer",
+    "company": "Intel",
+    "location": "Bangalore",
+    "type": "job",
+    "skillsRequired": "Java",
+    "salary": "6.9 LPA",
+    "description": "Build Java applications for internal tooling and automation."
+  },
+  {
+    "category": "Java Developer Jobs",
+    "title": "Java Backend Developer",
+    "company": "Zoho",
+    "location": "Chennai",
+    "type": "job",
+    "skillsRequired": "Java",
+    "salary": "6.4 LPA",
+    "description": "Work on product backend features using Java."
+  },
+  {
+    "category": "Java Developer Jobs",
+    "title": "Java Developer",
+    "company": "Swiggy",
+    "location": "Remote",
+    "type": "job",
+    "skillsRequired": "Java",
+    "salary": "6.5 LPA",
+    "description": "Remote role focused on backend development in Java."
+  },
+  {
+    "category": "Java Developer Jobs",
+    "title": "Java Engineer",
+    "company": "Cognizant",
+    "location": "Chennai",
+    "type": "job",
+    "skillsRequired": "Java",
+    "salary": "6.3 LPA",
+    "description": "Develop enterprise business logic using Java."
+  },
+  {
+    "category": "Full Stack Developer Jobs",
+    "title": "Full Stack Developer",
+    "company": "Google",
+    "location": "Bangalore",
+    "type": "job",
+    "skillsRequired": "MERN",
+    "salary": "12.0 LPA",
+    "description": "Build modern full stack features using the MERN stack."
+  },
+  {
+    "category": "Full Stack Developer Jobs",
+    "title": "Full Stack Engineer",
+    "company": "Microsoft",
+    "location": "Hyderabad",
+    "type": "job",
+    "skillsRequired": "React,Node",
+    "salary": "11.5 LPA",
+    "description": "Work across frontend and backend product modules."
+  },
+  {
+    "category": "Full Stack Developer Jobs",
+    "title": "Full Stack Developer",
+    "company": "Amazon",
+    "location": "Bangalore",
+    "type": "job",
+    "skillsRequired": "MERN",
+    "salary": "11.8 LPA",
+    "description": "Develop end-to-end product features with JavaScript technologies."
+  },
+  {
+    "category": "Full Stack Developer Jobs",
+    "title": "Full Stack Developer",
+    "company": "Flipkart",
+    "location": "Bangalore",
+    "type": "job",
+    "skillsRequired": "MEAN",
+    "salary": "10.8 LPA",
+    "description": "Support MEAN stack application development."
+  },
+  {
+    "category": "Full Stack Developer Jobs",
+    "title": "Full Stack Developer",
+    "company": "TCS",
+    "location": "Pune",
+    "type": "job",
+    "skillsRequired": "React,Node",
+    "salary": "8.0 LPA",
+    "description": "Build and maintain React and Node.js based applications."
+  },
+  {
+    "category": "Full Stack Developer Jobs",
+    "title": "Full Stack Developer",
+    "company": "Infosys",
+    "location": "Mysore",
+    "type": "job",
+    "skillsRequired": "JavaScript",
+    "salary": "8.2 LPA",
+    "description": "Work on full stack JavaScript product development."
+  },
+  {
+    "category": "Full Stack Developer Jobs",
+    "title": "Full Stack Developer",
+    "company": "Zoho",
+    "location": "Chennai",
+    "type": "job",
+    "skillsRequired": "Node",
+    "salary": "8.4 LPA",
+    "description": "Contribute across product UI and Node.js backend services."
+  },
+  {
+    "category": "Full Stack Developer Jobs",
+    "title": "Full Stack Developer",
+    "company": "IBM",
+    "location": "Pune",
+    "type": "job",
+    "skillsRequired": "React",
+    "salary": "8.7 LPA",
+    "description": "Work on business applications spanning frontend and backend."
+  },
+  {
+    "category": "Full Stack Developer Jobs",
+    "title": "Full Stack Developer",
+    "company": "Capgemini",
+    "location": "Delhi",
+    "type": "job",
+    "skillsRequired": "Angular",
+    "salary": "8.1 LPA",
+    "description": "Support enterprise web app development across the stack."
+  },
+  {
+    "category": "Full Stack Developer Jobs",
+    "title": "Full Stack Engineer",
+    "company": "Oracle",
+    "location": "Hyderabad",
+    "type": "job",
+    "skillsRequired": "Node",
+    "salary": "9.0 LPA",
+    "description": "Build APIs and frontend integrations for enterprise tools."
+  },
+  {
+    "category": "Full Stack Developer Jobs",
+    "title": "Full Stack Developer",
+    "company": "Intel",
+    "location": "Bangalore",
+    "type": "job",
+    "skillsRequired": "MERN",
+    "salary": "9.2 LPA",
+    "description": "Develop MERN applications for internal platforms."
+  },
+  {
+    "category": "Full Stack Developer Jobs",
+    "title": "Full Stack Developer",
+    "company": "Adobe",
+    "location": "Noida",
+    "type": "job",
+    "skillsRequired": "React",
+    "salary": "9.5 LPA",
+    "description": "Work across UI development and service integration."
+  },
+  {
+    "category": "Full Stack Developer Jobs",
+    "title": "Full Stack Developer",
+    "company": "Swiggy",
+    "location": "Remote",
+    "type": "job",
+    "skillsRequired": "Node",
+    "salary": "8.9 LPA",
+    "description": "Remote full stack role focused on Node.js-based product work."
+  },
+  {
+    "category": "Full Stack Developer Jobs",
+    "title": "Full Stack Developer",
+    "company": "Paytm",
+    "location": "Noida",
+    "type": "job",
+    "skillsRequired": "React",
+    "salary": "8.8 LPA",
+    "description": "Build user-facing features and backend integrations."
+  },
+  {
+    "category": "Full Stack Developer Jobs",
+    "title": "Full Stack Developer",
+    "company": "Cognizant",
+    "location": "Chennai",
+    "type": "job",
+    "skillsRequired": "JavaScript",
+    "salary": "8.0 LPA",
+    "description": "Develop full stack business solutions with JavaScript."
+  },
+  {
+    "category": "Frontend Developer Jobs",
+    "title": "Frontend Developer",
+    "company": "Google",
+    "location": "Bangalore",
+    "type": "job",
+    "skillsRequired": "React",
+    "salary": "10.5 LPA",
+    "description": "Build high-quality frontend interfaces using React."
+  },
+  {
+    "category": "Frontend Developer Jobs",
+    "title": "Frontend Engineer",
+    "company": "Microsoft",
+    "location": "Hyderabad",
+    "type": "job",
+    "skillsRequired": "React",
+    "salary": "10.2 LPA",
+    "description": "Develop frontend experiences for enterprise products."
+  },
+  {
+    "category": "Frontend Developer Jobs",
+    "title": "Frontend Developer",
+    "company": "Amazon",
+    "location": "Bangalore",
+    "type": "job",
+    "skillsRequired": "HTML,CSS,JS",
+    "salary": "9.8 LPA",
+    "description": "Create responsive frontend components and web pages."
+  },
+  {
+    "category": "Frontend Developer Jobs",
+    "title": "Frontend Developer",
+    "company": "Flipkart",
+    "location": "Bangalore",
+    "type": "job",
+    "skillsRequired": "Angular",
+    "salary": "9.5 LPA",
+    "description": "Work on Angular-based e-commerce frontend modules."
+  },
+  {
+    "category": "Frontend Developer Jobs",
+    "title": "Frontend Developer",
+    "company": "TCS",
+    "location": "Pune",
+    "type": "job",
+    "skillsRequired": "React",
+    "salary": "7.2 LPA",
+    "description": "Build scalable React frontends for internal clients."
+  },
+  {
+    "category": "Frontend Developer Jobs",
+    "title": "Frontend Developer",
+    "company": "Infosys",
+    "location": "Mysore",
+    "type": "job",
+    "skillsRequired": "JavaScript",
+    "salary": "7.0 LPA",
+    "description": "Support UI development and frontend testing."
+  },
+  {
+    "category": "Frontend Developer Jobs",
+    "title": "Frontend Developer",
+    "company": "Zoho",
+    "location": "Chennai",
+    "type": "job",
+    "skillsRequired": "Vue",
+    "salary": "7.5 LPA",
+    "description": "Create product UIs using Vue and modern frontend tooling."
+  },
+  {
+    "category": "Frontend Developer Jobs",
+    "title": "Frontend Developer",
+    "company": "IBM",
+    "location": "Pune",
+    "type": "job",
+    "skillsRequired": "React",
+    "salary": "8.0 LPA",
+    "description": "Contribute to frontend architecture and component systems."
+  },
+  {
+    "category": "Frontend Developer Jobs",
+    "title": "Frontend Developer",
+    "company": "Capgemini",
+    "location": "Delhi",
+    "type": "job",
+    "skillsRequired": "Angular",
+    "salary": "7.8 LPA",
+    "description": "Work on frontend modules and enterprise UI flows."
+  },
+  {
+    "category": "Frontend Developer Jobs",
+    "title": "Frontend Engineer",
+    "company": "Oracle",
+    "location": "Hyderabad",
+    "type": "job",
+    "skillsRequired": "React",
+    "salary": "8.6 LPA",
+    "description": "Develop web frontend experiences for internal platforms."
+  },
+  {
+    "category": "Frontend Developer Jobs",
+    "title": "Frontend Developer",
+    "company": "Intel",
+    "location": "Bangalore",
+    "type": "job",
+    "skillsRequired": "HTML",
+    "salary": "7.4 LPA",
+    "description": "Work on frontend markup and UI enhancements."
+  },
+  {
+    "category": "Frontend Developer Jobs",
+    "title": "Frontend Developer",
+    "company": "Adobe",
+    "location": "Noida",
+    "type": "job",
+    "skillsRequired": "CSS",
+    "salary": "8.2 LPA",
+    "description": "Support web UI styling and frontend interaction work."
+  },
+  {
+    "category": "Frontend Developer Jobs",
+    "title": "Frontend Developer",
+    "company": "Swiggy",
+    "location": "Remote",
+    "type": "job",
+    "skillsRequired": "React",
+    "salary": "8.4 LPA",
+    "description": "Remote frontend development with React-based applications."
+  },
+  {
+    "category": "Frontend Developer Jobs",
+    "title": "Frontend Developer",
+    "company": "Paytm",
+    "location": "Noida",
+    "type": "job",
+    "skillsRequired": "JavaScript",
+    "salary": "7.9 LPA",
+    "description": "Build frontend features and interactive dashboards."
+  },
+  {
+    "category": "Frontend Developer Jobs",
+    "title": "Frontend Developer",
+    "company": "Cognizant",
+    "location": "Chennai",
+    "type": "job",
+    "skillsRequired": "HTML",
+    "salary": "7.1 LPA",
+    "description": "Support frontend implementation and optimization tasks."
+  },
+  {
+    "category": "UI/UX Jobs",
+    "title": "UI Designer",
+    "company": "Google",
+    "location": "Bangalore",
+    "type": "job",
+    "skillsRequired": "Figma",
+    "salary": "9.0 LPA",
+    "description": "Create polished UI layouts and visual systems using Figma."
+  },
+  {
+    "category": "UI/UX Jobs",
+    "title": "UX Designer",
+    "company": "Microsoft",
+    "location": "Hyderabad",
+    "type": "job",
+    "skillsRequired": "UX Research",
+    "salary": "9.3 LPA",
+    "description": "Conduct user research and improve digital product flows."
+  },
+  {
+    "category": "UI/UX Jobs",
+    "title": "Product Designer",
+    "company": "Amazon",
+    "location": "Bangalore",
+    "type": "job",
+    "skillsRequired": "UI",
+    "salary": "9.8 LPA",
+    "description": "Design user-centered product journeys and interfaces."
+  },
+  {
+    "category": "UI/UX Jobs",
+    "title": "UI UX Designer",
+    "company": "Flipkart",
+    "location": "Bangalore",
+    "type": "job",
+    "skillsRequired": "Figma",
+    "salary": "8.8 LPA",
+    "description": "Work on app and web UI/UX designs for customer products."
+  },
+  {
+    "category": "UI/UX Jobs",
+    "title": "UI Designer",
+    "company": "Paytm",
+    "location": "Noida",
+    "type": "job",
+    "skillsRequired": "Design",
+    "salary": "8.2 LPA",
+    "description": "Create user interface assets and design systems."
+  },
+  {
+    "category": "UI/UX Jobs",
+    "title": "UX Designer",
+    "company": "Adobe",
+    "location": "Noida",
+    "type": "job",
+    "skillsRequired": "UX",
+    "salary": "9.4 LPA",
+    "description": "Improve usability and user experience of digital products."
+  },
+  {
+    "category": "UI/UX Jobs",
+    "title": "UI Designer",
+    "company": "TCS",
+    "location": "Pune",
+    "type": "job",
+    "skillsRequired": "Figma",
+    "salary": "7.2 LPA",
+    "description": "Design enterprise dashboards and interface assets."
+  },
+  {
+    "category": "UI/UX Jobs",
+    "title": "UX Designer",
+    "company": "Infosys",
+    "location": "Mysore",
+    "type": "job",
+    "skillsRequired": "UX",
+    "salary": "7.4 LPA",
+    "description": "Support user journey improvements and prototype validation."
+  },
+  {
+    "category": "UI/UX Jobs",
+    "title": "UI Designer",
+    "company": "Zoho",
+    "location": "Chennai",
+    "type": "job",
+    "skillsRequired": "Design",
+    "salary": "7.8 LPA",
+    "description": "Create interface concepts and component visuals."
+  },
+  {
+    "category": "UI/UX Jobs",
+    "title": "UX Designer",
+    "company": "IBM",
+    "location": "Pune",
+    "type": "job",
+    "skillsRequired": "UX Research",
+    "salary": "8.5 LPA",
+    "description": "Research user behavior and suggest product improvements."
+  },
+  {
+    "category": "UI/UX Jobs",
+    "title": "UI Designer",
+    "company": "Capgemini",
+    "location": "Delhi",
+    "type": "job",
+    "skillsRequired": "UI",
+    "salary": "7.6 LPA",
+    "description": "Design web interfaces and maintain design consistency."
+  },
+  {
+    "category": "UI/UX Jobs",
+    "title": "UX Designer",
+    "company": "Oracle",
+    "location": "Hyderabad",
+    "type": "job",
+    "skillsRequired": "UX",
+    "salary": "8.3 LPA",
+    "description": "Improve application usability and workflow efficiency."
+  },
+  {
+    "category": "UI/UX Jobs",
+    "title": "UI Designer",
+    "company": "Intel",
+    "location": "Bangalore",
+    "type": "job",
+    "skillsRequired": "Figma",
+    "salary": "8.0 LPA",
+    "description": "Build design mockups and high-fidelity UI screens."
+  },
+  {
+    "category": "UI/UX Jobs",
+    "title": "UX Designer",
+    "company": "Swiggy",
+    "location": "Remote",
+    "type": "job",
+    "skillsRequired": "UX",
+    "salary": "8.1 LPA",
+    "description": "Remote UX role focused on consumer product experiences."
+  },
+  {
+    "category": "UI/UX Jobs",
+    "title": "UI Designer",
+    "company": "Cognizant",
+    "location": "Chennai",
+    "type": "job",
+    "skillsRequired": "Design",
+    "salary": "7.5 LPA",
+    "description": "Support interface design and visual quality improvements."
+  }
+]
