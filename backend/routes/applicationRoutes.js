@@ -42,6 +42,10 @@ router.post('/apply', async (req, res) => {
       applicationId
     });
   } catch (error) {
+    if (error?.code === 11000) {
+      return res.status(409).json({ message: 'You have already applied for this job.' });
+    }
+
     return res.status(500).json({ message: 'Failed to apply for the job.', error: error.message });
   }
 });

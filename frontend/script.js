@@ -1,5 +1,11 @@
+const DEPLOYED_API_BASE = 'https://smartjobportal-api.onrender.com';
 const storedApiBaseUrl = localStorage.getItem('smartJobPortalApiBaseUrl');
-const API_BASE_URL = storedApiBaseUrl || 'http://localhost:5001';
+const isLocalFrontend = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+const API_BASE = (
+  window.SMART_JOB_PORTAL_API_BASE ||
+  storedApiBaseUrl ||
+  (isLocalFrontend ? 'http://localhost:5001' : DEPLOYED_API_BASE)
+).replace(/\/$/, '');
 const page = document.body.dataset.page;
 
 const getCurrentUser = () => {
@@ -287,7 +293,7 @@ const showJobDetails = async (jobId) => {
   if (!modal) return;
 
   try {
-    const job = await fetchJson(`${API_BASE_URL}/job/${jobId}`);
+    const job = await fetchJson(`${API_BASE}/job/${jobId}`);
     document.getElementById('jobDetailsCategory').textContent = job.category || 'Job Details';
     document.getElementById('jobDetailsTitle').textContent = job.title || 'Job Details';
     document.getElementById('jobDetailsMeta').innerHTML = `
@@ -345,7 +351,7 @@ const handleRegister = () => {
     const formData = new FormData(form);
 
     try {
-      const data = await fetchJson(`${API_BASE_URL}/register`, {
+      const data = await fetchJson(`${API_BASE}/register`, {
         method: 'POST',
         body: formData
       });
@@ -370,7 +376,7 @@ const handleLogin = () => {
     const payload = Object.fromEntries(new FormData(form).entries());
 
     try {
-      const data = await fetchJson(`${API_BASE_URL}/login`, {
+      const data = await fetchJson(`${API_BASE}/login`, {
         method: 'POST',
         body: JSON.stringify(payload)
       });
@@ -393,7 +399,7 @@ const applyToJob = async (jobId) => {
     return;
   }
 
-  await fetchJson(`${API_BASE_URL}/apply`, {
+  await fetchJson(`${API_BASE}/apply`, {
     method: 'POST',
     body: JSON.stringify({
       user_id: currentUser.id,
@@ -454,7 +460,7 @@ const initApplyForm = () => {
     }
 
     try {
-      await fetchJson(`${API_BASE_URL}/apply`, {
+      await fetchJson(`${API_BASE}/apply`, {
         method: 'POST',
         body: JSON.stringify({
           user_id: currentUser.id,
@@ -490,12 +496,12 @@ const renderJobs = async (filter = '', category = '', city = '', mode = '') => {
 
   try {
     const currentUser = getCurrentUser();
-    let jobs = await fetchJson(`${API_BASE_URL}/jobs`);
+    let jobs = await fetchJson(`${API_BASE}/jobs`);
     populateCityFilter(jobs);
 
     if (currentUser && currentUser.role === 'student' && currentUser.skills && jobsHeaderNote) {
       const recommendedJobs = await fetchJson(
-        `${API_BASE_URL}/jobs/recommend?skills=${encodeURIComponent(currentUser.skills)}`
+        `${API_BASE}/jobs/recommend?skills=${encodeURIComponent(currentUser.skills)}`
       );
       jobsHeaderNote.innerHTML = `
         <div class="card-shell">
@@ -659,7 +665,7 @@ const renderStudentApplications = async (user) => {
   if (!container) return;
 
   try {
-    const applications = await fetchJson(`${API_BASE_URL}/applications?userId=${user.id}&role=student`);
+    const applications = await fetchJson(`${API_BASE}/applications?userId=${user.id}&role=student`);
     if (!applications.length) {
       renderEmptyState(container, 'No applications yet. Browse jobs and apply to see status here.');
       return;
@@ -706,7 +712,7 @@ const renderCompanyJobs = async (user) => {
   const jobsContainer = document.getElementById('companyJobs');
 
   try {
-    const jobs = await fetchJson(`${API_BASE_URL}/jobs/company/${user.id}`);
+    const jobs = await fetchJson(`${API_BASE}/jobs/company/${user.id}`);
     if (!jobs.length) {
       renderEmptyState(jobsContainer, 'No jobs posted yet. Use the form above to create the first job.');
       return;
@@ -731,7 +737,7 @@ const renderCompanyApplications = async (user) => {
   const container = document.getElementById('companyApplications');
 
   try {
-    const applications = await fetchJson(`${API_BASE_URL}/applications?userId=${user.id}&role=company`);
+    const applications = await fetchJson(`${API_BASE}/applications?userId=${user.id}&role=company`);
     if (!applications.length) {
       renderEmptyState(container, 'No applicants yet. When students apply, they will appear here.');
       return;
@@ -778,7 +784,7 @@ const handleProfileUpdate = (user) => {
     }
 
     try {
-      const data = await fetchJson(`${API_BASE_URL}/users/${user.id}`, {
+      const data = await fetchJson(`${API_BASE}/users/${user.id}`, {
         method: 'PUT',
         body: formData
       });
@@ -804,7 +810,7 @@ const handleJobCreation = (user) => {
     payload.posted_by = user.id;
 
     try {
-      await fetchJson(`${API_BASE_URL}/create-job`, {
+      await fetchJson(`${API_BASE}/create-job`, {
         method: 'POST',
         body: JSON.stringify(payload)
       });
@@ -827,7 +833,7 @@ const initDashboard = async () => {
   }
 
   try {
-    const freshUser = await fetchJson(`${API_BASE_URL}/users/${user.id}`);
+    const freshUser = await fetchJson(`${API_BASE}/users/${user.id}`);
     setCurrentUser(freshUser);
     fillProfile(freshUser);
     handleProfileUpdate(freshUser);

@@ -5,7 +5,9 @@
   "main": "backend/server.js",
   "scripts": {
     "start": "node backend/server.js",
-    "dev": "nodemon backend/server.js"
+    "dev": "nodemon backend/server.js",
+    "seed": "node backend/seed.js",
+    "frontend": "serve frontend -l 8080"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
@@ -16,6 +18,7 @@
     "multer": "^2.0.2"
   },
   "devDependencies": {
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.9",
+    "serve": "^14.2.6"
   }
 }
