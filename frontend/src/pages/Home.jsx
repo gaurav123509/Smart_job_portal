@@ -85,9 +85,8 @@ export default function Home() {
             </div>
           </div>
           <div className="home-illustration">
-            <div className="illustration-card">
-              <div className="illustration-figure"></div>
-              <div className="illustration-figure alt"></div>
+            <div className="hero-poster">
+              <img src="/hiring-poster.png" alt="We are hiring poster" />
             </div>
           </div>
         </section>
