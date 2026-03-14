@@ -3,9 +3,13 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/smart_job_portal';
+const PRIMARY_URI = process.env.MONGODB_URI;
+const FALLBACK_URI = process.env.MONGODB_URI_FALLBACK || 'mongodb://127.0.0.1:27017/smart_job_portal';
 
 let isConnecting = false;
+let activeUri = null;
+
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const connectDatabase = async () => {
   if (mongoose.connection.readyState === 1) {
@@ -19,12 +23,30 @@ const connectDatabase = async () => {
   isConnecting = true;
 
   try {
-    await mongoose.connect(MONGODB_URI, {
-      autoIndex: true,
-      serverSelectionTimeoutMS: 5000
-    });
+    const uriList = PRIMARY_URI ? [PRIMARY_URI, FALLBACK_URI] : [FALLBACK_URI];
+    const maxRetries = 3;
 
-    return mongoose.connection;
+    for (const uri of uriList) {
+      for (let attempt = 1; attempt <= maxRetries; attempt += 1) {
+        try {
+          await mongoose.connect(uri, {
+            autoIndex: true,
+            serverSelectionTimeoutMS: 4000
+          });
+          activeUri = uri;
+          return mongoose.connection;
+        } catch (error) {
+          const isLastAttempt = attempt === maxRetries;
+          if (isLastAttempt) {
+            break;
+          }
+          // Exponential-ish backoff: 1s, 2s
+          await wait(attempt * 1000);
+        }
+      }
+    }
+
+    throw new Error('Unable to connect to any configured MongoDB URI. Tried primary then fallback.');
   } finally {
     isConnecting = false;
   }
@@ -42,7 +64,8 @@ const pingDatabase = async () => {
 };
 
 module.exports = {
-  MONGODB_URI,
+  MONGODB_URI: PRIMARY_URI || FALLBACK_URI,
+  activeUri: () => activeUri,
   connectDatabase,
   initializeDatabase,
   pingDatabase
