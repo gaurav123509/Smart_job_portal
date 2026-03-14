@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const { initializeDatabase, pingDatabase } = require('./config/db');
+const { initializeDatabase, pingDatabase, connectDatabase } = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
 const jobRoutes = require('./routes/jobRoutes');
 const applicationRoutes = require('./routes/applicationRoutes');
@@ -65,31 +65,58 @@ app.use((error, _req, res, _next) => {
 });
 
 const startServer = async () => {
-  try {
-    await initializeDatabase();
+  const retryDelayMs = Number(process.env.DB_RETRY_MS || 5000);
+  const allowStartWithoutDb = process.env.ALLOW_START_WITHOUT_DB === 'true';
 
-    const server = app.listen(PORT, () => {
-      const baseUrl = `http://localhost:${PORT}`;
-      console.log('\nSmart Job Portal started successfully');
-      console.log(`REST API: ${baseUrl}`);
-      console.log(`Health: ${baseUrl}/health`);
-      if (process.env.FRONTEND_PUBLIC_URL) {
-        console.log(`Frontend: ${process.env.FRONTEND_PUBLIC_URL}`);
-      }
-      console.log('');
-    });
+  const tryInitialDb = async () => {
+    try {
+      await initializeDatabase();
+      console.log('Database connected on startup.');
+      return true;
+    } catch (error) {
+      console.error('Database connection failed on startup:', error.message);
+      return false;
+    }
+  };
 
-    server.on('error', (err) => {
-      if (err.code === 'EADDRINUSE') {
-        console.error(`Port ${PORT} is already in use. Change the PORT environment variable or stop the process using that port.`);
-      } else {
-        console.error('Server error:', err.message);
-      }
-      process.exit(1);
-    });
-  } catch (error) {
-    console.error('Failed to start server:', error.message);
+  const dbConnected = await tryInitialDb();
+
+  if (!dbConnected && !allowStartWithoutDb) {
+    console.error('Set ALLOW_START_WITHOUT_DB=true to start server without an active database connection.');
     process.exit(1);
+  }
+
+  const server = app.listen(PORT, () => {
+    const baseUrl = `http://localhost:${PORT}`;
+    console.log('\nSmart Job Portal started' + (dbConnected ? ' successfully' : ' (DB not connected yet)'));
+    console.log(`REST API: ${baseUrl}`);
+    console.log(`Health: ${baseUrl}/health`);
+    if (process.env.FRONTEND_PUBLIC_URL) {
+      console.log(`Frontend: ${process.env.FRONTEND_PUBLIC_URL}`);
+    }
+    console.log('');
+  });
+
+  server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      console.error(`Port ${PORT} is already in use. Change the PORT environment variable or stop the process using that port.`);
+    } else {
+      console.error('Server error:', err.message);
+    }
+    process.exit(1);
+  });
+
+  if (!dbConnected) {
+    console.warn(`Retrying DB connection every ${retryDelayMs}ms...`);
+    const timer = setInterval(async () => {
+      try {
+        await connectDatabase();
+        console.log('Database connected after retry.');
+        clearInterval(timer);
+      } catch (err) {
+        console.error('Database retry failed:', err.message);
+      }
+    }, retryDelayMs);
   }
 };
 
