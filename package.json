@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node backend/server.js",
     "dev": "nodemon backend/server.js",
-    "seed": "node backend/seed.js"
+    "seed": "node backend/seed.js",
+    "frontend": "npm --prefix frontend run dev -- --port 8080",
+    "frontend:build": "npm --prefix frontend run build"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
