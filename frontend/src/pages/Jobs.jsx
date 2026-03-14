@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import JobCard from '../components/JobCard';
 import Toast from '../components/Toast';
+import SearchBar from '../components/SearchBar';
 import { applyToJob, getJobById, getJobs, getRecommendedJobs } from '../api/api';
 
 const USER_KEY = 'smartJobPortalUser';
@@ -28,13 +29,28 @@ export default function Jobs() {
   const [headerNote, setHeaderNote] = useState('');
   const [message, setMessage] = useState('');
   const [toast, setToast] = useState('');
-  const [filters, setFilters] = useState({ type: '', category: '', city: '', mode: '' });
+  const [filters, setFilters] = useState({ type: '', category: '', city: '', mode: '', query: '', location: '' });
   const [detailJob, setDetailJob] = useState(null);
   const [applyJob, setApplyJob] = useState(null);
   const [applyError, setApplyError] = useState('');
   const [applyForm, setApplyForm] = useState({ applicant_name: '', education: '', skills: '', experience: 'Fresher', cover_note: '' });
 
   useEffect(() => {
+    const storedSearch = localStorage.getItem('smartJobPortalSearch');
+    if (storedSearch) {
+      try {
+        const parsed = JSON.parse(storedSearch);
+        setFilters((prev) => ({
+          ...prev,
+          query: parsed.title || '',
+          location: parsed.location || ''
+        }));
+      } catch (_error) {
+        // ignore
+      }
+      localStorage.removeItem('smartJobPortalSearch');
+    }
+
     const loadJobs = async () => {
       try {
         const allJobs = await getJobs();
@@ -61,6 +77,15 @@ export default function Jobs() {
   const cities = useMemo(() => [...new Set(jobs.map((job) => job.location).filter(Boolean))].sort((a, b) => a.localeCompare(b)), [jobs]);
 
   const filteredJobs = useMemo(() => jobs.filter((job) => {
+    const query = filters.query.trim().toLowerCase();
+    const location = filters.location.trim().toLowerCase();
+    if (query) {
+      const haystack = `${job.title} ${job.company} ${job.skills_required}`.toLowerCase();
+      if (!haystack.includes(query)) return false;
+    }
+    if (location) {
+      if (!job.location?.toLowerCase().includes(location)) return false;
+    }
     if (filters.type && job.type !== filters.type) return false;
     if (filters.category && job.category !== filters.category) return false;
     if (filters.city && job.location !== filters.city) return false;
@@ -120,65 +145,55 @@ export default function Jobs() {
 
   return (
     <>
-      <header className="subpage-header">
-        <div>
-          <p className="eyebrow">Opportunity Feed</p>
-          <h1>Jobs and internships for fresh talent</h1>
-        </div>
-        <div className="nav-links">
-          <Link to="/">Home</Link>
-          <Link to="/dashboard">Dashboard</Link>
-          {currentUser ? (
-            <button className="button-link ghost type-button" type="button" onClick={handleLogout}>Logout</button>
-          ) : (
-            <Link to="/login">Sign in</Link>
-          )}
-        </div>
-      </header>
-
-      <main className="page-section">
-        <section className="jobs-toolbar card-shell">
-          <div>
-            <h2>Latest openings</h2>
-            <p>Explore category-wise jobs loaded directly from the backend API.</p>
+      <Navbar currentUser={currentUser} onLogout={handleLogout} compact />
+      <header className="jobs-hero">
+        <div className="jobs-hero-inner">
+          <p className="jobs-hero-kicker">Find your perfect role</p>
+          <h1>Find Your Perfect Role</h1>
+          <p className="jobs-hero-subtitle">{filteredJobs.length} opportunities waiting for you</p>
+          <div className="jobs-hero-search">
+            <SearchBar
+              title={filters.query}
+              onTitleChange={(value) => setFilters((prev) => ({ ...prev, query: value }))}
+              location={filters.location}
+              onLocationChange={(value) => setFilters((prev) => ({ ...prev, location: value }))}
+              onSubmit={(event) => event.preventDefault()}
+              buttonLabel="Filter"
+            />
           </div>
-          <div className="filter-group">
-            <label htmlFor="jobFilter">Filter</label>
-            <select id="jobFilter" value={filters.type} onChange={(e) => setFilters({ ...filters, type: e.target.value })}>
-              <option value="">All</option>
+          <div className="jobs-hero-filters">
+            <select value={filters.type} onChange={(e) => setFilters({ ...filters, type: e.target.value })}>
+              <option value="">All types</option>
               <option value="job">Jobs</option>
               <option value="internship">Internships</option>
             </select>
-          </div>
-          <div className="filter-group">
-            <label htmlFor="categoryFilter">Category</label>
-            <select id="categoryFilter" value={filters.category} onChange={(e) => setFilters({ ...filters, category: e.target.value })}>
-              <option value="">All Categories</option>
+            <select value={filters.category} onChange={(e) => setFilters({ ...filters, category: e.target.value })}>
+              <option value="">All categories</option>
               <option value="Python Developer Jobs">Python Developer</option>
               <option value="Java Developer Jobs">Java Developer</option>
               <option value="Full Stack Developer Jobs">Full Stack</option>
               <option value="Frontend Developer Jobs">Front-end</option>
               <option value="UI/UX Jobs">UI/UX</option>
             </select>
-          </div>
-          <div className="filter-group">
-            <label htmlFor="cityFilter">City</label>
-            <select id="cityFilter" value={filters.city} onChange={(e) => setFilters({ ...filters, city: e.target.value })}>
-              <option value="">All Cities</option>
-              {cities.map((city) => <option key={city} value={city}>{city}</option>)}
-            </select>
-          </div>
-          <div className="filter-group">
-            <label htmlFor="modeFilter">Mode</label>
-            <select id="modeFilter" value={filters.mode} onChange={(e) => setFilters({ ...filters, mode: e.target.value })}>
-              <option value="">All Modes</option>
+            <select value={filters.mode} onChange={(e) => setFilters({ ...filters, mode: e.target.value })}>
+              <option value="">Any mode</option>
               <option value="online">Online</option>
               <option value="offline">Offline</option>
               <option value="hybrid">Hybrid</option>
             </select>
+            <button
+              className="button-link ghost type-button"
+              type="button"
+              onClick={() => setFilters({ type: '', category: '', city: '', mode: '', query: '', location: '' })}
+            >
+              Reset
+            </button>
           </div>
-          <button className="primary-btn secondary" type="button" onClick={() => setFilters({ type: '', category: '', city: '', mode: '' })}>Refresh feed</button>
-        </section>
+        </div>
+      </header>
+
+      <main className="page-section">
+        <div className="jobs-count">Showing {filteredJobs.length} results</div>
 
         {headerNote ? <div className="page-message success">{headerNote}</div> : null}
         <section className="jobs-grid">

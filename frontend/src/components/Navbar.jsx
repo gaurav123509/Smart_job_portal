@@ -15,8 +15,12 @@ export default function Navbar({ currentUser, onLogout, compact = false }) {
 
   return (
     <nav className={compact ? 'subpage-header' : 'nav-bar'}>
-      <Link to="/" className="brand">Smart Job Portal</Link>
+      <Link to="/" className="brand">
+        <span className="brand-mark">SJP</span>
+        <span className="brand-text">Smart Job Portal</span>
+      </Link>
       <div className="nav-links">
+        <Link to="/">Home</Link>
         <Link to="/jobs">Jobs</Link>
         <Link to="/dashboard" onClick={(event) => handleProtectedClick(event, '/dashboard')}>Dashboard</Link>
         {currentUser ? (

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 import { loginUser } from '../api/api';
 
 const USER_KEY = 'smartJobPortalUser';
@@ -26,27 +27,50 @@ export default function Login() {
   };
 
   return (
-    <main className="auth-layout">
-      <section className="auth-panel intro-panel">
-        <p className="eyebrow">Welcome Back</p>
-        <h1>Stay close to your hiring pipeline.</h1>
-        <p>Students can manage applications and companies can review applicants, posted roles, and hiring activity from one account.</p>
-        <Link to="/register" className="button-link ghost">Create account</Link>
-      </section>
+    <main className="auth-page">
+      <Navbar currentUser={null} onLogout={() => {}} />
+      <section className="auth-shell">
+        <form className="auth-card" onSubmit={handleSubmit}>
+          <div className="auth-logo">
+            <span>sjp</span>
+          </div>
+          <h1 className="auth-title">Welcome Back</h1>
+          <p className="auth-subtitle">Sign in to your Smart Job Portal account</p>
 
-      <section className="auth-panel form-panel">
-        <form className="form-card" onSubmit={handleSubmit}>
-          <h2>Sign in</h2>
           <div className="form-group">
-            <label>Email address</label>
-            <input type="email" required value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+            <label>Email Address</label>
+            <div className="input-with-icon">
+              <span className="input-icon">@</span>
+              <input type="email" required value={form.email} placeholder="you@example.com" onChange={(e) => setForm({ ...form, email: e.target.value })} />
+            </div>
           </div>
+
           <div className="form-group">
-            <label>Password</label>
-            <input type="password" required value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
+            <div className="auth-row">
+              <label>Password</label>
+              <button className="auth-link" type="button">Forgot password?</button>
+            </div>
+            <div className="input-with-icon">
+              <span className="input-icon">*</span>
+              <input type="password" required value={form.password} placeholder="••••••••" onChange={(e) => setForm({ ...form, password: e.target.value })} />
+            </div>
           </div>
-          <button type="submit" className="primary-btn">Login</button>
+
+          <button type="submit" className="auth-btn">Sign In</button>
           <p className={`form-message ${error ? 'error' : 'success'}`}>{error || message}</p>
+
+          <div className="auth-divider">
+            <span>or continue with</span>
+          </div>
+
+          <div className="social-grid">
+            <button type="button" className="social-btn">Google</button>
+            <button type="button" className="social-btn">GitHub</button>
+          </div>
+
+          <p className="auth-footer">
+            Don't have an account? <Link to="/register">Sign up free</Link>
+          </p>
         </form>
       </section>
     </main>

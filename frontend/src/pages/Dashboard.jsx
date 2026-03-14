@@ -1,6 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { createJob, getApplications, getCompanyJobs, getUser, updateUser } from '../api/api';
+import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import Sidebar from '../components/Sidebar';
+import DashboardStats from '../components/DashboardStats';
+import JobCard from '../components/JobCard';
+import { createJob, getApplications, getCompanyJobs, getJobs, getRecommendedJobs, getUser, updateUser } from '../api/api';
 
 const USER_KEY = 'smartJobPortalUser';
 
@@ -22,10 +26,12 @@ export default function Dashboard() {
   const [postContent, setPostContent] = useState('');
   const [showMoreApplications, setShowMoreApplications] = useState(false);
   const [studentApplications, setStudentApplications] = useState([]);
+  const [recommendedJobs, setRecommendedJobs] = useState([]);
   const [companyJobs, setCompanyJobs] = useState([]);
   const [companyApplications, setCompanyApplications] = useState([]);
   const [profileForm, setProfileForm] = useState({ name: '', skills: '', study: '', bio: '', avatar: null, resume: null });
   const [jobForm, setJobForm] = useState({ job_type: 'job', title: '', company: '', location: '', skills_required: '', salary: '', description: '' });
+  const [activePanel, setActivePanel] = useState('overview');
 
   useEffect(() => {
     if (!user) {
@@ -43,6 +49,10 @@ export default function Dashboard() {
 
         if (freshUser.role === 'student') {
           setStudentApplications(await getApplications(freshUser.id, 'student'));
+          const recommended = freshUser.skills
+            ? await getRecommendedJobs(freshUser.skills)
+            : await getJobs();
+          setRecommendedJobs(recommended.slice(0, 3));
         } else {
           setCompanyJobs(await getCompanyJobs(freshUser.id));
           setCompanyApplications(await getApplications(freshUser.id, 'company'));
@@ -115,50 +125,107 @@ export default function Dashboard() {
 
   if (!user) return null;
 
+  const sidebarItems = user.role === 'company'
+    ? [
+        { id: 'overview', label: 'Overview' },
+        { id: 'post', label: 'Post a role' },
+        { id: 'applicants', label: 'Applicants' }
+      ]
+    : [
+        { id: 'overview', label: 'Overview' },
+        { id: 'applications', label: 'Applied jobs' },
+        { id: 'recommended', label: 'Recommended' },
+        { id: 'profile', label: 'Profile' }
+      ];
+
+  const stats = user.role === 'company'
+    ? [
+        { label: 'Open roles', value: companyJobs.length, helper: 'Published positions' },
+        { label: 'Applicants', value: companyApplications.length, helper: 'Total submissions' },
+        { label: 'Profile views', value: Math.max(12, companyApplications.length + 4), helper: '+5 this week' },
+        { label: 'Interviews', value: Math.max(2, Math.ceil(companyApplications.length / 4)), helper: 'Next: Tomorrow' }
+      ]
+    : [
+        { label: 'Applied jobs', value: studentApplications.length || 0, helper: '+3 this week' },
+        { label: 'Profile views', value: Math.max(18, skillList.length * 6), helper: '+12 this week' },
+        { label: 'Shortlisted', value: Math.max(2, Math.floor(studentApplications.length / 2)), helper: '+2 this week' },
+        { label: 'Interviews', value: Math.max(1, Math.floor(studentApplications.length / 3)), helper: 'Next: Tomorrow' }
+      ];
+
   return (
     <>
+      <Navbar currentUser={user} onLogout={handleLogout} compact />
       <header className="subpage-header">
-        <div>
+        <div className="subpage-title">
           <p className="eyebrow">Workspace</p>
           <h1>{user.role === 'company' ? 'Company dashboard' : 'Student dashboard'}</h1>
         </div>
-        <div className="nav-links">
-          <Link to="/">Home</Link>
-          <Link to="/jobs">Jobs</Link>
-          <button className="button-link ghost type-button" type="button" onClick={handleLogout}>Logout</button>
-        </div>
       </header>
 
-      <main className="page-section dashboard-layout dashboard-profile-layout">
-        <section className="profile-column">
-          <article className="profile-showcase card-shell">
-            <div className="profile-cover"></div>
-            <div className="profile-avatar" style={user.avatar ? { backgroundImage: `url(${user.avatar})` } : {}}>{!user.avatar ? 'SJP' : ''}</div>
-            <div className="profile-identity">
-              <p className="profile-handle">@{user.name.toLowerCase().replace(/\s+/g, '')}</p>
-              <h2>{user.name}</h2>
-              <p className="profile-subline">{user.role === 'company' ? 'Hiring workspace overview' : 'Fresh talent profile overview'}</p>
-            </div>
-            <div className="profile-cta-row">
-              <button className="button-link ghost type-button" type="button">Profile</button>
-              <a className={`button-link ghost ${!user.resume ? 'disabled-link' : ''}`} href={user.resume || '#'} target="_blank" rel="noreferrer">Resume</a>
-              <button className="button-link ghost type-button" type="button" onClick={() => setShowPost((value) => !value)}>{showPost ? 'Close Post' : 'Add Post'}</button>
-              <button className="button-link accent type-button" type="button" onClick={() => setShowEdit((value) => !value)}>{showEdit ? 'Close Edit' : 'Edit'}</button>
-            </div>
-            <p className="profile-bio">{user.bio || 'Keep your profile updated so companies can review your skills, resume, and hiring readiness from one clean workspace.'}</p>
-          </article>
+      <main className="page-section dashboard-shell">
+        <Sidebar items={sidebarItems} activeId={activePanel} onSelect={setActivePanel} />
 
-          <article className="profile-info-card card-shell">
-            <h2>Information</h2>
-            <div className="profile-info-list">
-              <div className="profile-info-row"><span className="profile-info-label">Email</span><span className="profile-info-value">{user.email}</span></div>
-              <div className="profile-info-row"><span className="profile-info-label">Role</span><span className="profile-info-value">{user.role}</span></div>
-              <div className="profile-info-row"><span className="profile-info-label">Study</span><span className="profile-info-value">{user.study || '-'}</span></div>
-              <div className="profile-info-row"><span className="profile-info-label">Resume</span><span className="profile-info-value">{user.resume ? <a href={user.resume} target="_blank" rel="noreferrer">View resume</a> : 'Not uploaded'}</span></div>
-              <div className="profile-info-row"><span className="profile-info-label">Joined</span><span className="profile-info-value">{user.created_at ? new Date(user.created_at).toLocaleDateString() : '-'}</span></div>
+        <section className="dashboard-main-column">
+          <section className="workspace-banner card-shell">
+            <div className="dashboard-head">
+              <div>
+                <p className="section-kicker">Overview</p>
+                <h2>Welcome back, {user.name.split(' ')[0]}!</h2>
+                <p>Here’s what’s happening with your {user.role === 'company' ? 'hiring' : 'job search'} this week.</p>
+              </div>
+              <div className="dashboard-head-actions">
+                <button className="icon-btn" type="button" aria-label="Notifications">🔔</button>
+                <button className="button-link accent type-button" type="button" onClick={() => setShowEdit(true)}>Upload Resume</button>
+              </div>
             </div>
-            <div className="tag-row">{skillList.length ? skillList.map((skill) => <span className="tag" key={skill}>{skill}</span>) : <span className="tag">Add skills</span>}</div>
-          </article>
+            <DashboardStats stats={stats} />
+          </section>
+
+          {activePanel === 'overview' && (
+            <section className="dashboard-panel">
+              <div className="card-shell summary-grid">
+                <div className="summary-card">
+                  <p className="section-kicker">Profile summary</p>
+                  <h3>{user.name}</h3>
+                  <p>{user.bio || 'Add a short bio so hiring teams understand your focus.'}</p>
+                  <div className="tag-row">{skillList.length ? skillList.map((skill) => <span className="tag" key={skill}>{skill}</span>) : <span className="tag">Add skills</span>}</div>
+                </div>
+                <div className="summary-card">
+                  <p className="section-kicker">Contact</p>
+                  <p><strong>Email:</strong> {user.email}</p>
+                  <p><strong>Study:</strong> {user.study || '-'}</p>
+                  <p><strong>Resume:</strong> {user.resume ? <a href={user.resume} target="_blank" rel="noreferrer">View resume</a> : 'Not uploaded'}</p>
+                </div>
+              </div>
+              <div className="card-shell recent-applications">
+                <div className="section-headline">
+                  <div>
+                    <p className="section-kicker">Recent Applications</p>
+                    <h2>Latest updates</h2>
+                  </div>
+                  <button className="button-link ghost type-button" type="button" onClick={() => setActivePanel('applications')}>View all</button>
+                </div>
+                <div className="data-list">
+                  {studentApplications.slice(0, 4).map((application) => (
+                    <div className="recent-row" key={application.id}>
+                      <div className="recent-avatar">{application.company?.slice(0, 2) || 'SJ'}</div>
+                      <div>
+                        <strong>{application.title}</strong>
+                        <div className="recent-meta">{application.company}</div>
+                      </div>
+                      <div className="recent-status">
+                        <span>{new Date(application.applied_date).toLocaleDateString()}</span>
+                        <span className={`status-pill ${application.status || 'applied'}`}>{application.status || 'Applied'}</span>
+                      </div>
+                    </div>
+                  ))}
+                  {!studentApplications.length ? (
+                    <div className="empty-state">No applications yet. Browse jobs and apply to see updates here.</div>
+                  ) : null}
+                </div>
+              </div>
+            </section>
+          )}
 
           {showPost && (
             <section className="card-shell">
@@ -194,95 +261,104 @@ export default function Dashboard() {
               </form>
             </section>
           )}
-        </section>
-
-        <section className="dashboard-main-column">
-          <section className="workspace-banner card-shell">
-            <div>
-              <p className="section-kicker">Overview</p>
-              <h2>{user.role === 'company' ? 'Company workspace' : 'Student workspace'}</h2>
-              <p>{user.role === 'company' ? 'Publish roles, review applicants, and manage your hiring workflow professionally.' : `Keep your profile hiring-ready and present your skills with a polished candidate summary${user.study ? ` • ${user.study}` : ''}.`}</p>
-            </div>
-            <div className="workspace-stats">
-              <article className="stat-card"><span className="stat-label">Role</span><strong>{user.role}</strong></article>
-              <article className="stat-card"><span className="stat-label">Skills</span><strong>{skillList.length}</strong></article>
-              <article className="stat-card"><span className="stat-label">Resume</span><strong>{user.resume ? 'Uploaded' : 'Pending'}</strong></article>
-            </div>
-          </section>
 
           {user.role === 'student' ? (
             <section className="dashboard-panel">
-              <div className="card-shell workspace-card">
-                <div className="section-headline"><div><p className="section-kicker">Application Tracker</p><h2>My Apply's</h2></div></div>
-                <div className="data-list">
-                  {!studentApplications.length ? (
-                    <div className="empty-state">No applications yet. Browse jobs and apply to see status here.</div>
-                  ) : (
-                    <>
-                      {latestApplication ? (
-                        <article className="data-card">
-                          <h3>{latestApplication.title}</h3>
-                          <div className="data-meta"><span>{latestApplication.company}</span><span>{latestApplication.location}</span><span>Status: {latestApplication.status}</span></div>
-                          <p>Applied on {new Date(latestApplication.applied_date).toLocaleDateString()}</p>
-                        </article>
-                      ) : null}
-                      {showMoreApplications && otherApplications.map((application) => (
-                        <article className="data-card" key={application.id}>
-                          <h3>{application.title}</h3>
-                          <div className="data-meta"><span>{application.company}</span><span>{application.location}</span><span>Status: {application.status}</span></div>
-                          <p>Applied on {new Date(application.applied_date).toLocaleDateString()}</p>
-                        </article>
-                      ))}
-                      {otherApplications.length ? (
-                        <button className="button-link ghost type-button" type="button" onClick={() => setShowMoreApplications((value) => !value)}>
-                          {showMoreApplications ? 'See less' : 'See more'}
-                        </button>
-                      ) : null}
-                    </>
-                  )}
+              {activePanel === 'applications' && (
+                <div className="card-shell workspace-card">
+                  <div className="section-headline"><div><p className="section-kicker">Application Tracker</p><h2>My Apply's</h2></div></div>
+                  <div className="data-list">
+                    {!studentApplications.length ? (
+                      <div className="empty-state">No applications yet. Browse jobs and apply to see status here.</div>
+                    ) : (
+                      <>
+                        {latestApplication ? (
+                          <article className="data-card">
+                            <h3>{latestApplication.title}</h3>
+                            <div className="data-meta"><span>{latestApplication.company}</span><span>{latestApplication.location}</span><span>Status: {latestApplication.status}</span></div>
+                            <p>Applied on {new Date(latestApplication.applied_date).toLocaleDateString()}</p>
+                          </article>
+                        ) : null}
+                        {showMoreApplications && otherApplications.map((application) => (
+                          <article className="data-card" key={application.id}>
+                            <h3>{application.title}</h3>
+                            <div className="data-meta"><span>{application.company}</span><span>{application.location}</span><span>Status: {application.status}</span></div>
+                            <p>Applied on {new Date(application.applied_date).toLocaleDateString()}</p>
+                          </article>
+                        ))}
+                        {otherApplications.length ? (
+                          <button className="button-link ghost type-button" type="button" onClick={() => setShowMoreApplications((value) => !value)}>
+                            {showMoreApplications ? 'See less' : 'See more'}
+                          </button>
+                        ) : null}
+                      </>
+                    )}
+                  </div>
                 </div>
-              </div>
+              )}
+              {activePanel === 'recommended' && (
+                <div className="card-shell workspace-card">
+                  <div className="section-headline"><div><p className="section-kicker">Recommended</p><h2>Jobs that match your skills</h2></div></div>
+                  <div className="featured-grid">
+                    {recommendedJobs.length ? recommendedJobs.map((job) => (
+                      <JobCard key={job.id} job={job} compact />
+                    )) : <div className="empty-state">No recommendations yet. Add skills to your profile.</div>}
+                  </div>
+                </div>
+              )}
+              {activePanel === 'profile' && (
+                <div className="profile-tools">
+                  <button className="button-link ghost type-button" type="button" onClick={() => setShowPost((value) => !value)}>{showPost ? 'Close Post' : 'Add Post'}</button>
+                  <button className="button-link accent type-button" type="button" onClick={() => setShowEdit((value) => !value)}>{showEdit ? 'Close Edit' : 'Edit Profile'}</button>
+                </div>
+              )}
             </section>
           ) : (
             <section className="dashboard-panel">
-              <div className="card-shell workspace-card">
-                <div className="section-headline"><div><p className="section-kicker">Hiring Desk</p><h2>Create job or internship</h2></div></div>
-                <form className="stack-form" onSubmit={handleJobSubmit}>
-                  <div className="form-group"><label htmlFor="jobType">Type</label><select id="jobType" value={jobForm.job_type} onChange={(e) => setJobForm({ ...jobForm, job_type: e.target.value })}><option value="job">Full-time / Job</option><option value="internship">Internship</option></select></div>
-                  <div className="form-group"><label htmlFor="jobTitle">Title</label><input id="jobTitle" type="text" required value={jobForm.title} onChange={(e) => setJobForm({ ...jobForm, title: e.target.value })} /></div>
-                  <div className="form-group"><label htmlFor="jobCompany">Company</label><input id="jobCompany" type="text" required value={jobForm.company} onChange={(e) => setJobForm({ ...jobForm, company: e.target.value })} /></div>
-                  <div className="form-group"><label htmlFor="jobLocation">Location</label><input id="jobLocation" type="text" required value={jobForm.location} onChange={(e) => setJobForm({ ...jobForm, location: e.target.value })} /></div>
-                  <div className="form-group"><label htmlFor="jobSkills">Skills required</label><input id="jobSkills" type="text" required value={jobForm.skills_required} onChange={(e) => setJobForm({ ...jobForm, skills_required: e.target.value })} /></div>
-                  <div className="form-group"><label htmlFor="jobSalary">Salary / Stipend</label><input id="jobSalary" type="text" required value={jobForm.salary} onChange={(e) => setJobForm({ ...jobForm, salary: e.target.value })} /></div>
-                  <div className="form-group"><label htmlFor="jobDescription">Description</label><textarea id="jobDescription" rows="4" required value={jobForm.description} onChange={(e) => setJobForm({ ...jobForm, description: e.target.value })}></textarea></div>
-                  <button type="submit" className="primary-btn">Publish role</button>
-                </form>
-              </div>
-              <div className="card-shell workspace-card">
-                <div className="section-headline"><div><p className="section-kicker">Open Positions</p><h2>Posted roles</h2></div></div>
-                <div className="data-list">
-                  {companyJobs.length ? companyJobs.map((job) => (
-                    <article className="data-card" key={job.id}>
-                      <h3>{job.title} <span className="type-label">{job.type}</span></h3>
-                      <div className="data-meta"><span>{job.location}</span><span>{job.salary}</span></div>
-                      <p>{job.description}</p>
-                    </article>
-                  )) : <div className="empty-state">No jobs posted yet. Use the form above to create the first job.</div>}
+              {activePanel === 'post' && (
+                <div className="card-shell workspace-card">
+                  <div className="section-headline"><div><p className="section-kicker">Hiring Desk</p><h2>Create job or internship</h2></div></div>
+                  <form className="stack-form" onSubmit={handleJobSubmit}>
+                    <div className="form-group"><label htmlFor="jobType">Type</label><select id="jobType" value={jobForm.job_type} onChange={(e) => setJobForm({ ...jobForm, job_type: e.target.value })}><option value="job">Full-time / Job</option><option value="internship">Internship</option></select></div>
+                    <div className="form-group"><label htmlFor="jobTitle">Title</label><input id="jobTitle" type="text" required value={jobForm.title} onChange={(e) => setJobForm({ ...jobForm, title: e.target.value })} /></div>
+                    <div className="form-group"><label htmlFor="jobCompany">Company</label><input id="jobCompany" type="text" required value={jobForm.company} onChange={(e) => setJobForm({ ...jobForm, company: e.target.value })} /></div>
+                    <div className="form-group"><label htmlFor="jobLocation">Location</label><input id="jobLocation" type="text" required value={jobForm.location} onChange={(e) => setJobForm({ ...jobForm, location: e.target.value })} /></div>
+                    <div className="form-group"><label htmlFor="jobSkills">Skills required</label><input id="jobSkills" type="text" required value={jobForm.skills_required} onChange={(e) => setJobForm({ ...jobForm, skills_required: e.target.value })} /></div>
+                    <div className="form-group"><label htmlFor="jobSalary">Salary / Stipend</label><input id="jobSalary" type="text" required value={jobForm.salary} onChange={(e) => setJobForm({ ...jobForm, salary: e.target.value })} /></div>
+                    <div className="form-group"><label htmlFor="jobDescription">Description</label><textarea id="jobDescription" rows="4" required value={jobForm.description} onChange={(e) => setJobForm({ ...jobForm, description: e.target.value })}></textarea></div>
+                    <button type="submit" className="primary-btn">Publish role</button>
+                  </form>
                 </div>
-              </div>
-              <div className="card-shell workspace-card">
-                <div className="section-headline"><div><p className="section-kicker">Pipeline</p><h2>Applicants</h2></div></div>
-                <div className="data-list">
-                  {companyApplications.length ? companyApplications.map((application) => (
-                    <article className="data-card" key={application.id}>
-                      <h3>{application.title} {application.type ? `(${application.type})` : ''}</h3>
-                      <div className="data-meta"><span>{application.applicant_name}</span><span>{application.applicant_email}</span><span>Status: {application.status}</span></div>
-                      <p><strong>Skills:</strong> {application.skills || 'Not provided'}</p>
-                      <p><strong>Resume:</strong> {application.resume ? <a href={application.resume} target="_blank" rel="noreferrer">View resume</a> : 'Not uploaded'}</p>
-                    </article>
-                  )) : <div className="empty-state">No applicants yet. When students apply, they will appear here.</div>}
+              )}
+              {activePanel === 'overview' && (
+                <div className="card-shell workspace-card">
+                  <div className="section-headline"><div><p className="section-kicker">Open Positions</p><h2>Posted roles</h2></div></div>
+                  <div className="data-list">
+                    {companyJobs.length ? companyJobs.map((job) => (
+                      <article className="data-card" key={job.id}>
+                        <h3>{job.title} <span className="type-label">{job.type}</span></h3>
+                        <div className="data-meta"><span>{job.location}</span><span>{job.salary}</span></div>
+                        <p>{job.description}</p>
+                      </article>
+                    )) : <div className="empty-state">No jobs posted yet. Use the form above to create the first job.</div>}
+                  </div>
                 </div>
-              </div>
+              )}
+              {activePanel === 'applicants' && (
+                <div className="card-shell workspace-card">
+                  <div className="section-headline"><div><p className="section-kicker">Pipeline</p><h2>Applicants</h2></div></div>
+                  <div className="data-list">
+                    {companyApplications.length ? companyApplications.map((application) => (
+                      <article className="data-card" key={application.id}>
+                        <h3>{application.title} {application.type ? `(${application.type})` : ''}</h3>
+                        <div className="data-meta"><span>{application.applicant_name}</span><span>{application.applicant_email}</span><span>Status: {application.status}</span></div>
+                        <p><strong>Skills:</strong> {application.skills || 'Not provided'}</p>
+                        <p><strong>Resume:</strong> {application.resume ? <a href={application.resume} target="_blank" rel="noreferrer">View resume</a> : 'Not uploaded'}</p>
+                      </article>
+                    )) : <div className="empty-state">No applicants yet. When students apply, they will appear here.</div>}
+                  </div>
+                </div>
+              )}
             </section>
           )}
           <p className={`page-message ${message ? 'success' : ''}`}>{message}</p>
